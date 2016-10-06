@@ -19,13 +19,13 @@ close all;
 
 %function [tly, tlx, bry, brx, tipo] = caracteristicas(listado, directory)  %entrem les variables directory i el listado
 
-% tly = [];                               %tipo no la defineixo ja que em donava problemes amb els índex.
+% tly = [];                               %tipo no la defineixo ja que em donava problemes amb els Ã­ndex.
 % tlx = [];
 % bry = [];
 % brx = [];
 
 i=1;                                    %hi hauran dos contejos, K per a llegir cada arxiu i "i" per llegir les imatges ja que en un arxiu
-                                        %poden haver-hi dues o mes imatges (per tant k és diferent a i!!, tindrem més imatges que arxius)
+                                        %poden haver-hi dues o mes imatges (per tant k Ã©s diferent a i!!, tindrem mÃ©s imatges que arxius)
                                     
 dirname = uigetdir; % posar directori /train/gt quan s'obri finestra
 txtFiles = dir(fullfile(dirname,'*.txt')); % tots els arxius .txt
@@ -33,27 +33,27 @@ txtFiles = dir(fullfile(dirname,'*.txt')); % tots els arxius .txt
 for k = 1:length(txtFiles)
   file = fullfile(dirname, txtFiles(k).name); %fitxer a fitxer
   fileID = fopen(file);
-  data(k,:) = textscan(fileID,'%f %f %f %f %s');
+  data = textscan(fileID,'%f %f %f %f %s');
   
-  if length(data{k,5})<=1                  %per saber si hi ha una senyal o més al arxiu que hem llegit, mirem la llargada de c{5} (tipus de senyal)
-        tly(k,:)=data{1};                    %si la llargada és 1, llavors directamen escrivim cada característica a la variable corresponent
+  if length(data{5})<=1                  %per saber si hi ha una senyal o mÃ©s al arxiu que hem llegit, mirem la llargada de c{5} (tipus de senyal)
+        tly(k,:)=data{1};                    %si la llargada Ã©s 1, llavors directamen escrivim cada caracterÃ­stica a la variable corresponent
         tlx(k,:)=data{2};
         bry(k,:)=data{3};
         brx(k,:)=data{4};
-        type(k,:)=data{5};                      %avegades si ficava directament el c{5} al tipus(i) em donava error :/ per aixo he creat la variable type
+        tipo(k,:)=data{5};                      %avegades si ficava directament el c{5} al tipus(i) em donava error :/ per aixo he creat la variable type
         %tipo(k,:)=type;
-        i=i+1;                          %com que ja he omplert les variables pel primer arxiu, sumo 1 a l'índex i (quantitat imatges)
+        i=i+1;                          %com que ja he omplert les variables pel primer arxiu, sumo 1 a l'Ã­ndex i (quantitat imatges)
     else
-        cantidadsenales=length(data{k,5});   %si hi han més d'una imatge per arxiu entro en aquesta part.
-        y1=data{1};                        %al haver-hi un c{1} = nº1 nº2, necessito copiar-los a una variable per poder assigar-los després
+        cantidadsenales=length(data{5});   %si hi han mÃ©s d'una imatge per arxiu entro en aquesta part.
+        y1=data{1};                        %al haver-hi un c{1} = nÂº1 nÂº2, necessito copiar-los a una variable per poder assigar-los desprÃ©s
         x1=data{2};
         y2=data{3};
         x2=data{4};
         type=data{5};        
-        j=0;                            %inicialitzo un tercer conteo, aquest serà per sumar posicions a a les imatges, és a dir, si tinc omplert fins tly(5), i a l'arxiu 6 hi han dues imatges, necessito omplir el tly(6) i tly(7), per això creo la j.
+        j=0;                            %inicialitzo un tercer conteo, aquest serÃ  per sumar posicions a a les imatges, Ã©s a dir, si tinc omplert fins tly(5), i a l'arxiu 6 hi han dues imatges, necessito omplir el tly(6) i tly(7), per aixÃ² creo la j.
         
-        while j < cantidadsenales        %mentres que j sigui mes petit que la llargada (és a dir, j< que la quantitat d'imatges per arxiu), fico < i no <= per a que després li sumo una.
-            tly(k+j)=y1(j+1);           %la posició tly(i+j) serà el y(1), que és el primer nº de c{1}, el segon número es ficarà un cop j=1 (comencem amb j=0). j ha de començar a 0 ja que sino ficaríem el valor y(1) a l'index i+j!! (si j comencés a 1 ens estaríem saltant un índex que s'inicialitzaria a 0)
+        while j < cantidadsenales        %mentres que j sigui mes petit que la llargada (Ã©s a dir, j< que la quantitat d'imatges per arxiu), fico < i no <= per a que desprÃ©s li sumo una.
+            tly(k+j)=y1(j+1);           %la posiciÃ³ tly(i+j) serÃ  el y(1), que Ã©s el primer nÂº de c{1}, el segon nÃºmero es ficarÃ  un cop j=1 (comencem amb j=0). j ha de comenÃ§ar a 0 ja que sino ficarÃ­em el valor y(1) a l'index i+j!! (si j comencÃ©s a 1 ens estarÃ­em saltant un Ã­ndex que s'inicialitzaria a 0)
             tlx(k+j)=x1(j+1);
             bry(k+j)=y2(j+1);
             brx(k+j)=x2(j+1);
@@ -66,6 +66,6 @@ for k = 1:length(txtFiles)
   end    
 
   
-    fclose all;                           %si no ficava aquesta línia em petava.
+    fclose all;                           %si no ficava aquesta lÃ­nia em petava.
 
 end
