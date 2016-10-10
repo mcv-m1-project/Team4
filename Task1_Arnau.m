@@ -133,9 +133,9 @@ end
 % Filling Ratio
 fr_A = 1/2; % Triangle
 fr_B = 1/2; % Triangle
-fr_C = pi; % Circle
-fr_D = pi; % Circle
-fr_E = pi; % Circle
+fr_C = pi/4; % Circle
+fr_D = pi/4; % Circle
+fr_E = pi/4; % Circle
 fr_F = 1; % Square
 
 % Test PerCent(%) Total Signal
