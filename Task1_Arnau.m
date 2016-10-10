@@ -130,7 +130,7 @@ for k = 1:length(txtFiles)
 
 end
 
-% Filling Ratio
+% Filling Ratio   Experimental!!!!!!!!!!!!!!!!!! hacer de nuevo
 fr_A = 1/2; % Triangle
 fr_B = 1/2; % Triangle
 fr_C = pi/4; % Circle
