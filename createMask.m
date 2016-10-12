@@ -1,17 +1,21 @@
-function createMask(struct,train_split,dirname,dirname_new)
-
-    dirname_new1 = ['train_split/mask/' dirname_new];
-    [s, mess, messid] = mkdir(dirname_new1);
-
-for i = 1:train_split
+function createMask(struct, dirname, dirname_new)
+    % createMask
+    % Generate a mask for RGB, HSV & LAB space and and save each mask in a new directory
+    %
+    %    Parameter name      Value
+    %    --------------      -----
+    %    'struct'           Matrix cell array of A, B, C, D, E or F type
+    %    'dirname'          Current directory of each struct signl type
+    %    'dirname_new'      New directory to copy the new split array
     
-    toSplit = strsplit(struct{i}.name,{'gt.','.txt'}); 
-    im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
+    dirname_new = ['train_split/mask/' dirname_new];
+    [s, mess, messid] = mkdir(dirname_new);
+    train_split = round(0.7*length(struct));
 
-% switch 'pixel_method'
-% 
-%     case 'RGB'
-    
+    for i = 1:train_split
+        toSplit = strsplit(struct{i}.name,{'gt.','.txt'}); %struct{i}.name
+        im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
+
         im_R = im(:,:,1); % channel red
         im_G = im(:,:,2); % channel green
         im_B = im(:,:,3); % channel blue
@@ -21,19 +25,18 @@ for i = 1:train_split
         thresh_G = multithresh(im_G,2); 
         thresh_B = multithresh(im_B,2); 
 
-        % RGB space
-        red1 = (im_R > thresh_R(1)) & (im_B < thresh_G(1)) & (im_G < thresh_B(1)); % red mask
-        blue1 = (im_R < thresh_R(1)) & (im_B < thresh_G(1)) & (im_G > thresh_B(1)); % blue mask
+        % Masks (blue and red)
+        red1 = (im_R > thresh_R(1)) & (im_B < thresh_G(1)) & (im_G < thresh_B(1));
+        blue1 = (im_R < thresh_R(1)) & (im_B < thresh_G(1)) & (im_G > thresh_B(1));
 
-        mask_rgb = red1 | blue1; 
+        mask_rgb = red1 | blue1;
 
-%     case 'HSV'
         % figure;
         % imshow(im)
         % figure;
         % imshow(red|blue);
 
-        % HSV space 
+        % transform HSV Space
         im_hsv = rgb2hsv(im);
         im_H = im_hsv(:,:,1);
         im_S = im_hsv(:,:,2);
@@ -50,22 +53,20 @@ for i = 1:train_split
         blue2 = (im_H >= blue_H(1) & im_H <= blue_H(2)) & (im_S >= blue_S(1) & im_S <= blue_S(2)) & (im_V >= blue_V(1) & im_V <= blue_V(2));
 
         mask_hsv = red2 | blue2;
-        
-% figure(1)
-% imshow(im)
-% figure(2)
-% % subplot(1,2,1)
-% imshow(blue2|red2);
-% subplot(1,2,2)
-% imshow(blue2);
 
-% L lightness (luminance) (darkest black = 0 and brightest white at 100)
-% a (red positive values and  green negative values) (-128 a 128)
-% b (yellow positive values and blue negative values) (-128 a 128)
+        % figure(1)
+        % imshow(im)
+        % figure(2)
+        % % subplot(1,2,1)
+        % imshow(blue2|red2);
+        % subplot(1,2,2)
+        % imshow(blue2);
 
-%     case 'Lab'
+        % L lightness (luminance) (darkest black = 0 and brightest white at 100)
+        % a (red positive values and  green negative values) (-128 a 128)
+        % b (yellow positive values and blue negative values) (-128 a 128)
 
-        % Lab space
+        % transform LAB Space
         im_lab = rgb2lab(im);
         im_L = im_lab(:,:,1);
         im_a = im_lab(:,:,2);
@@ -92,12 +93,9 @@ for i = 1:train_split
         % imshow(blue2);
         % subplot(1,2,3)
         % imshow(blue3);
-
-        % end
-
-        imwrite(mask_rgb, [dirname_new1 '/mask_rgb_' toSplit{1,2} '.png']);
-        imwrite(mask_hsv, [dirname_new1 '/mask_hsv_' toSplit{1,2} '.png']);
-        imwrite(mask_lab, [dirname_new1 '/mask_lab_' toSplit{1,2} '.png']);
-
-end
+        
+        imwrite(mask_rgb, strjoin([dirname_new '/mask.' toSplit(2) '.RGB.png'],''));
+        imwrite(mask_hsv, strjoin([dirname_new '/mask.' toSplit(2) '.HSV.png'],''));
+        imwrite(mask_lab, strjoin([dirname_new '/mask.' toSplit(2) '.LAB.png'],''));
+    end
 end

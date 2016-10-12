@@ -1,9 +1,12 @@
-dirname = '/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/Task1/train_split';
+%% -------------------  Task 3  -------------------  %%
 
-createMask(sA, train_split_A, [dirname '/A'], 'A');
-createMask(sB, train_split_B, [dirname '/B'], 'B');
-createMask(sC, train_split_C, [dirname '/C'], 'C');
-createMask(sD, train_split_D, [dirname '/D'], 'D');
-createMask(sE, train_split_E, [dirname '/E'], 'E');
-createMask(sF, train_split_F, [dirname '/F'], 'F');
+dirname = 'train_split';
+dirname_new = 'train_split/mask';
+[s, mess, messid] = mkdir(dirname_new);
 
+createMask(sA, [dirname '/A'], 'A');
+createMask(sB, [dirname '/B'], 'B');
+createMask(sC, [dirname '/C'], 'C');
+createMask(sD, [dirname '/D'], 'D');
+createMask(sE, [dirname '/E'], 'E');
+createMask(sF, [dirname '/F'], 'F');
