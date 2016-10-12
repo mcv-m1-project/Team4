@@ -17,18 +17,18 @@ thresh_R = multithresh(im_R,2); %
 thresh_G = multithresh(im_G,2); 
 thresh_B = multithresh(im_B,2); 
 
-% Masks (blue and red)
-red1 = (im_R > thresh_R(1)) & (im_B < thresh_G(1)) & (im_G < thresh_B(1));
-blue1 = (im_R < thresh_R(1)) & (im_B < thresh_G(1)) & (im_G > thresh_B(1));
+% RGB space
+red1 = (im_R > thresh_R(1)) & (im_B < thresh_G(1)) & (im_G < thresh_B(1)); % red mask
+blue1 = (im_R < thresh_R(1)) & (im_B < thresh_G(1)) & (im_G > thresh_B(1)); % blue mask
 
-mask_rgb = red1 | blue1;
+mask_rgb = red1 | blue1; 
 
 % figure;
 % imshow(im)
 % figure;
 % imshow(red|blue);
 
-% transform 
+% HSV space 
 im_hsv = rgb2hsv(im);
 im_H = im_hsv(:,:,1);
 im_S = im_hsv(:,:,2);
@@ -58,6 +58,7 @@ mask_hsv = red2 | blue2;
 % a (red positive values and  green negative values) (-128 a 128)
 % b (yellow positive values and blue negative values) (-128 a 128)
 
+% Lab space
 im_lab = rgb2lab(im);
 im_L = im_lab(:,:,1);
 im_a = im_lab(:,:,2);
@@ -85,9 +86,9 @@ mask_lab = red3 | blue3;
 % subplot(1,2,3)
 % imshow(blue3);
 
-imwrite(mask_rgb, [dirname_new1 '/mask_rgb_.png']);
-imwrite(mask_hsv, [dirname_new1 '/mask_rgb_.png']);
-imwrite(mask_lab, [dirname_new1 toSplit(2) '.png']);
+imwrite(mask_rgb, [dirname_new1 '/mask_rgb_' toSplit{1,2} '.png']);
+imwrite(mask_hsv, [dirname_new1 '/mask_hsv_' toSplit{1,2} '.png']);
+imwrite(mask_lab, [dirname_new1 '/mask_lab_' toSplit{1,2} '.png']);
 
 end
 end
