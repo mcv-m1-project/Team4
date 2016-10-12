@@ -1,11 +1,11 @@
-function createMask(cellArray,train_split,dirname,dirname_new)
+function createMask(struct,train_split,dirname,dirname_new)
 
     dirname_new1 = ['train_split/mask/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new1);
 
 for i = 1:train_split
     
-    toSplit = strsplit(cellArray{i,2},{'gt.','.txt'}); %struct{i}.name
+    toSplit = strsplit(struct{i}.name,{'gt.','.txt'}); 
     im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
 
 % switch 'pixel_method'
