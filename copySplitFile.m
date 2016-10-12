@@ -1,4 +1,4 @@
-function copySplitFile(cellArray, train_split, dirname, dirname_new)
+function copySplitFile(struct, train_split, dirname, dirname_new)
     % copySplitFile
     % Split and separate each signal type cell array in a new directory
     %
@@ -14,8 +14,8 @@ function copySplitFile(cellArray, train_split, dirname, dirname_new)
 
     if s % status 1 => folder created
         for i = 1:train_split
-            txtSplit = fullfile([dirname '/gt'], cellArray{i,2});
-            toSplit = strsplit(cellArray{i,2},{'gt.','.txt'});
+            txtSplit = fullfile([dirname '/gt'], struct{i}.name);
+            toSplit = strsplit(struct{i}.name,{'gt.','.txt'}); % toSplit-> (1)'gt.' (2)'name' (3)'.txt'
             imgSplit = fullfile(dirname, strjoin([toSplit(2) '.jpg'],''));
             maskSplit = fullfile([dirname '/mask'], strjoin(['mask.' toSplit(2) '.png'],''));
             
