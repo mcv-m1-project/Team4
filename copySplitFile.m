@@ -4,7 +4,7 @@ function copySplitFile(struct, dirname, dirname_new)
     %
     %    Parameter name      Value
     %    --------------      -----
-    %    'struct'           Matrix cell array of A, B, C, D, E or F type
+    %    'struct'           Matrix struct of A, B, C, D, E or F type
     %    'dirname'          Current directory of each struct signal type
     %    'dirname_new'      New directory to copy the new split array
     
