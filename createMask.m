@@ -1,51 +1,56 @@
 function createMask(cellArray,train_split,dirname,dirname_new)
 
-dirname_new1 = ['train_split/mask/' dirname_new];
-[s, mess, messid] = mkdir(dirname_new1);
+    dirname_new1 = ['train_split/mask/' dirname_new];
+    [s, mess, messid] = mkdir(dirname_new1);
 
 for i = 1:train_split
     
-toSplit = strsplit(cellArray{i,2},{'gt.','.txt'}); %struct{i}.name
-im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
-   
-im_R = im(:,:,1); % channel red
-im_G = im(:,:,2); % channel green
-im_B = im(:,:,3); % channel blue
+    toSplit = strsplit(cellArray{i,2},{'gt.','.txt'}); %struct{i}.name
+    im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
 
-% Otsu's Method: 
-thresh_R = multithresh(im_R,2); %
-thresh_G = multithresh(im_G,2); 
-thresh_B = multithresh(im_B,2); 
+% switch 'pixel_method'
+% 
+%     case 'RGB'
+    
+        im_R = im(:,:,1); % channel red
+        im_G = im(:,:,2); % channel green
+        im_B = im(:,:,3); % channel blue
 
-% RGB space
-red1 = (im_R > thresh_R(1)) & (im_B < thresh_G(1)) & (im_G < thresh_B(1)); % red mask
-blue1 = (im_R < thresh_R(1)) & (im_B < thresh_G(1)) & (im_G > thresh_B(1)); % blue mask
+        % Otsu's Method: 
+        thresh_R = multithresh(im_R,2); %
+        thresh_G = multithresh(im_G,2); 
+        thresh_B = multithresh(im_B,2); 
 
-mask_rgb = red1 | blue1; 
+        % RGB space
+        red1 = (im_R > thresh_R(1)) & (im_B < thresh_G(1)) & (im_G < thresh_B(1)); % red mask
+        blue1 = (im_R < thresh_R(1)) & (im_B < thresh_G(1)) & (im_G > thresh_B(1)); % blue mask
 
-% figure;
-% imshow(im)
-% figure;
-% imshow(red|blue);
+        mask_rgb = red1 | blue1; 
 
-% HSV space 
-im_hsv = rgb2hsv(im);
-im_H = im_hsv(:,:,1);
-im_S = im_hsv(:,:,2);
-im_V = im_hsv(:,:,3);
+%     case 'HSV'
+        % figure;
+        % imshow(im)
+        % figure;
+        % imshow(red|blue);
 
-red_H = [0.092 0.877];
-red_S = [0.604 1];
-red_V = [0.15 0.9];
-red2 = (im_H <= red_H(1) | im_H >= red_H(2)) & (im_S >= red_S(1) & im_S <= red_S(2)) & (im_V >= red_V(1) & im_V <= red_V(2));
+        % HSV space 
+        im_hsv = rgb2hsv(im);
+        im_H = im_hsv(:,:,1);
+        im_S = im_hsv(:,:,2);
+        im_V = im_hsv(:,:,3);
 
-blue_H = [0.501 0.791];
-blue_S = [0.5 1];
-blue_V = [0.15 0.9];
-blue2 = (im_H >= blue_H(1) & im_H <= blue_H(2)) & (im_S >= blue_S(1) & im_S <= blue_S(2)) & (im_V >= blue_V(1) & im_V <= blue_V(2));
+        red_H = [0.092 0.877];
+        red_S = [0.604 1];
+        red_V = [0.15 0.9];
+        red2 = (im_H <= red_H(1) | im_H >= red_H(2)) & (im_S >= red_S(1) & im_S <= red_S(2)) & (im_V >= red_V(1) & im_V <= red_V(2));
 
-mask_hsv = red2 | blue2;
+        blue_H = [0.501 0.791];
+        blue_S = [0.5 1];
+        blue_V = [0.15 0.9];
+        blue2 = (im_H >= blue_H(1) & im_H <= blue_H(2)) & (im_S >= blue_S(1) & im_S <= blue_S(2)) & (im_V >= blue_V(1) & im_V <= blue_V(2));
 
+        mask_hsv = red2 | blue2;
+        
 % figure(1)
 % imshow(im)
 % figure(2)
@@ -58,37 +63,41 @@ mask_hsv = red2 | blue2;
 % a (red positive values and  green negative values) (-128 a 128)
 % b (yellow positive values and blue negative values) (-128 a 128)
 
-% Lab space
-im_lab = rgb2lab(im);
-im_L = im_lab(:,:,1);
-im_a = im_lab(:,:,2);
-im_b = im_lab(:,:,3);
+%     case 'Lab'
 
-red_L = [5 50]; % 47
-red_a = [7 36]; % 68
-red_b = [0 25]; % 48
-red3 = (im_L >= red_L(1) & im_L <= red_L(2)) & (im_a >= red_a(1) & im_a <= red_a(2)) & (im_b >= red_b(1) & im_b <= red_b(2));
+        % Lab space
+        im_lab = rgb2lab(im);
+        im_L = im_lab(:,:,1);
+        im_a = im_lab(:,:,2);
+        im_b = im_lab(:,:,3);
 
-blue_L = [0 70]; %  24
-blue_a = [0 65]; %  17
-blue_b = [-90 -20]; % -46
-blue3 = (im_L >= blue_L(1) & im_L <= blue_L(2)) & (im_a >= blue_a(1) & im_a <= blue_a(2)) & (im_b >= blue_b(1) & im_b <= blue_b(2));
+        red_L = [5 50]; % 47
+        red_a = [7 36]; % 68
+        red_b = [0 25]; % 48
+        red3 = (im_L >= red_L(1) & im_L <= red_L(2)) & (im_a >= red_a(1) & im_a <= red_a(2)) & (im_b >= red_b(1) & im_b <= red_b(2));
 
-mask_lab = red3 | blue3;
+        blue_L = [0 70]; %  24
+        blue_a = [0 65]; %  17
+        blue_b = [-90 -20]; % -46
+        blue3 = (im_L >= blue_L(1) & im_L <= blue_L(2)) & (im_a >= blue_a(1) & im_a <= blue_a(2)) & (im_b >= blue_b(1) & im_b <= blue_b(2));
 
-% figure;
-% imshow(im)
-% figure;
-% subplot(1,2,1)
-% imshow(blue1);
-% subplot(1,2,2)
-% imshow(blue2);
-% subplot(1,2,3)
-% imshow(blue3);
+        mask_lab = red3 | blue3;
 
-imwrite(mask_rgb, [dirname_new1 '/mask_rgb_' toSplit{1,2} '.png']);
-imwrite(mask_hsv, [dirname_new1 '/mask_hsv_' toSplit{1,2} '.png']);
-imwrite(mask_lab, [dirname_new1 '/mask_lab_' toSplit{1,2} '.png']);
+        % figure;
+        % imshow(im)
+        % figure;
+        % subplot(1,2,1)
+        % imshow(blue1);
+        % subplot(1,2,2)
+        % imshow(blue2);
+        % subplot(1,2,3)
+        % imshow(blue3);
+
+        % end
+
+        imwrite(mask_rgb, [dirname_new1 '/mask_rgb_' toSplit{1,2} '.png']);
+        imwrite(mask_hsv, [dirname_new1 '/mask_hsv_' toSplit{1,2} '.png']);
+        imwrite(mask_lab, [dirname_new1 '/mask_lab_' toSplit{1,2} '.png']);
 
 end
 end
