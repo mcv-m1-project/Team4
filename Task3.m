@@ -1,30 +1,13 @@
-im = imread('/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/train/00.002300.jpg');
+im = imread('/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/train/00.001147.jpg'); % read the image
 
-thresh1 = multithresh(im(:,:,1));
-thresh11 = multithresh(im(:,:,1),2);
-thresh2 = multithresh(im(:,:,2));
-thresh22 = multithresh(im(:,:,2),2);
-thresh3 = multithresh(im(:,:,3));
-thresh33 = multithresh(im(:,:,3),2); 
+dirname = '/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/Task1/train_split';
+dirname_new = ['/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/Task1/train_split/mask' ];
+[s, mess, messid] = mkdir(dirname_new);
 
-red = (im(:,:,1) > thresh1) & (im(:,:,2) < thresh2) & (im(:,:,3) < thresh3);
-green = im(:,:,1) < thresh1 & im(:,:,2) > thresh2 & im(:,:,3) < thresh3;
-blue = im(:,:,1) < thresh1 & im(:,:,2) < thresh2 & im(:,:,3) > thresh3;
+createMask(A, train_split_A, [dirname '/A'], 'A');
+createMask(B, train_split_B, [dirname '/B'], 'B');
+createMask(C, train_split_C, [dirname '/C'], 'C');
+createMask(D, train_split_D, [dirname '/D'], 'D');
+createMask(E, train_split_E, [dirname '/E'], 'E');
+createMask(F, train_split_F, [dirname '/F'], 'F');
 
-red1 = (im(:,:,1) > thresh11(1)) & (im(:,:,2) < thresh22(1)) & (im(:,:,3) < thresh33(1));
-green1 = (im(:,:,1) < thresh11(1)) & (im(:,:,2) > thresh22(1)) & (im(:,:,3) < thresh33(1));
-blue1 = (im(:,:,1) < thresh11(1)) & (im(:,:,2) < thresh22(1)) & (im(:,:,3) > thresh33(1));
-
-figure(1)
-imshow(im)
-figure(2)
-subplot(1,2,1)
-imshow(blue|red);
-subplot(1,2,2)
-imshow(blue1|red1);
-
-% 
-% qu = imquantize(im,thresh11);
-% RGB = label2rgb(qu);
-% 
-% imshow(im);
