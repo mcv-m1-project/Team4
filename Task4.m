@@ -24,3 +24,4 @@ Metodo_Lab_E = TesteigImatges(sE,tE,[dirname '/mask'],[dirname_new '/E'],'Lab');
 Metodo_RGB_F = TesteigImatges(sF,tF,[dirname '/mask'],[dirname_new '/F'],'RGB');
 Metodo_HSV_F = TesteigImatges(sF,tF,[dirname '/mask'],[dirname_new '/F'],'HSV');
 Metodo_Lab_F = TesteigImatges(sF,tF,[dirname '/mask'],[dirname_new '/F'],'Lab');
+
