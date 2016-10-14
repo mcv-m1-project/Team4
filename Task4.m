@@ -1,9 +1,9 @@
 dirname = 'train';
 dirname_new = 'train_split/mask';
 
-Metodo_RGB_A = TesteigImatges(sA,tA,[dirname '/A'],[dirname_new 'A'],'RGB');
-Metodo_HSV_A = TesteigImatges(sA,tA,[dirname '/A'],[dirname_new 'A'],'HSV');
-Metodo_Lab_A = TesteigImatges(sA,tA,[dirname '/A'],[dirname_new 'A'],'Lab');
+Metodo_RGB_A = TesteigImatges(sA,tA,[dirname '/mask'],[dirname_new '/A'],'RGB');
+Metodo_HSV_A = TesteigImatges(sA,tA,[dirname '/mask'],[dirname_new '/A'],'HSV');
+Metodo_Lab_A = TesteigImatges(sA,tA,[dirname '/mask'],[dirname_new '/A'],'Lab');
 
 Metodo_RGB_B = TesteigImatges(sB,tB,[dirname '/B'],[dirname_new 'B'],'RGB');
 Metodo_HSV_B = TesteigImatges(sB,tB,[dirname '/B'],[dirname_new 'B'],'HSV');
@@ -24,4 +24,3 @@ Metodo_Lab_E = TesteigImatges(sE,tE,[dirname '/E'],[dirname_new 'E'],'Lab');
 Metodo_RGB_F = TesteigImatges(sF,tF,[dirname '/F'],[dirname_new 'F'],'RGB');
 Metodo_HSV_F = TesteigImatges(sF,tF,[dirname '/F'],[dirname_new 'F'],'HSV');
 Metodo_Lab_F = TesteigImatges(sF,tF,[dirname '/F'],[dirname_new 'F'],'Lab');
-
