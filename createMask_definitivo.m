@@ -1,4 +1,4 @@
-function createMask_definitivo(struct,train_split,dirname,dirname_new,pixel_method)
+function createMask(struct,train_split,dirname,dirname_new,pixel_method)
 
     dirname_new1 = ['train_split/mask/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new1);
@@ -69,7 +69,7 @@ switch pixel_method
 
      case 'Lab'
 
-        Lab space
+        %Lab space
         im_lab = rgb2lab(im);
         im_L = im_lab(:,:,1);
         im_a = im_lab(:,:,2);
