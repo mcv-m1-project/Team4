@@ -16,8 +16,10 @@ switch pixel_method
         [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
         [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
         
+        Recall=(pixelTP)/(pixelTP+pixelFN);
+        F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
         kRGB=kRGB+1;
-        Metodo{kRGB,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity);
+        Metodo{kRGB,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
        
         end
         
@@ -33,8 +35,11 @@ switch pixel_method
         [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
         [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
         
+        Recall=(pixelTP)/(pixelTP+pixelFN);
+        F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
+        
         kHSV=kHSV+1;        
-        Metodo{kHSV,1}=struct('Number TP', pixelTP, 'Number FP', pixelFP, 'Number FN', pixelFN, 'Number TN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity);
+        Metodo{kHSV,1}=struct('Number TP', pixelTP, 'Number FP', pixelFP, 'Number FN', pixelFN, 'Number TN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
        
         end
         
@@ -50,12 +55,14 @@ switch pixel_method
         [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
         [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
         
+        Recall=(pixelTP)/(pixelTP+pixelFN);
+        F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
+        
         kLab=kLab+1
-        Metodo{kLab,1}=struct('Number TP', pixelTP, 'Number FP', pixelFP, 'Number FN', pixelFN, 'Number TN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity);
+        Metodo{kLab,1}=struct('Number TP', pixelTP, 'Number FP', pixelFP, 'Number FN', pixelFN, 'Number TN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
             
         end
 end
-
 
 
         
