@@ -11,10 +11,10 @@ function copyValidationFile(struct, dirname, dirname_new)
     dirname_new = ['train_split_validation/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new);
     train_split = round(0.3*length(struct));
+    j= length(struct) - (round(0.3*length(struct)));
     
     if s % status 1 => folder created
         for i = 1:train_split
-            j=fix(rand*(length(struct)));
             txtSplit = fullfile([dirname '/gt'], struct{j}.name);
             toSplit = strsplit(struct{j}.name,{'gt.','.txt'}); % toSplit-> (1)'gt.' (2)'name' (3)'.txt'
             imgSplit = fullfile(dirname, strjoin([toSplit(2) '.jpg'],''));
@@ -23,6 +23,8 @@ function copyValidationFile(struct, dirname, dirname_new)
             copyfile(txtSplit, dirname_new); % copy txt files at new diretory train_split
             copyfile(imgSplit, dirname_new); % copy img files at new diretory train_split
             copyfile(maskSplit, dirname_new); % copy mask files at new diretory train_split
+            
+            j=j+1;
         end
         disp(['Folder created successfully (' pwd '/' dirname_new ')']);
     else
