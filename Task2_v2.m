@@ -25,3 +25,12 @@ tE = round(0.7*length(sE));
 tF = round(0.7*length(sF));
 tSplit = tA + tB + tC + tD + tE + tF;
 perCent = tSplit/tSignal
+
+vA = round(0.3*length(sA));
+vB = round(0.3*length(sB));
+vC = round(0.3*length(sC));
+vD = round(0.3*length(sD));
+vE = round(0.3*length(sE));
+vF = round(0.3*length(sF));
+vSplit = vA + vB + vC + vD + vE + vF;
+perCentv = vSplit/tSignal
