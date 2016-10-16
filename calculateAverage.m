@@ -5,6 +5,7 @@ FN=0;
 TN=0;
 Precision=0;
 Accuracy=0;
+Sensivity=0;
 Specifity=0;
 F1=0;
 Recall=0;
