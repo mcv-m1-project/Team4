@@ -22,7 +22,7 @@ Metodo_HSV_E = TesteigImatges(sE,vE,[dirname '/mask'],[dirname_new '/E'],'HSV');
 Metodo_Lab_E = TesteigImatges(sE,vE,[dirname '/mask'],[dirname_new '/E'],'Lab');
 
 Metodo_RGB_F = TesteigImatges(sF,vF,[dirname '/mask'],[dirname_new '/F'],'RGB');
-Metodo_HSV_F = TesteigImatges(sF,vf,[dirname '/mask'],[dirname_new '/F'],'HSV');
+Metodo_HSV_F = TesteigImatges(sF,vF,[dirname '/mask'],[dirname_new '/F'],'HSV');
 Metodo_Lab_F = TesteigImatges(sF,vF,[dirname '/mask'],[dirname_new '/F'],'Lab');
 
 % RGB
