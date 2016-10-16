@@ -33,7 +33,7 @@ function createTrainMask(struct, dirname, dirname_new, pixel_method)
 
             mask_rgb = red1 | blue1; 
 
-            imwrite(mask_rgb, strjoin([dirname_new '/mask_rgb_' toSplit(2) '.png'],''));
+            imwrite(mask_rgb, strjoin([dirname_new '/mask.' toSplit(2) '.RGB.png'],''));
 
             case 'HSV'
             % HSV space 
@@ -54,8 +54,7 @@ function createTrainMask(struct, dirname, dirname_new, pixel_method)
 
             mask_hsv = red2 | blue2;
 
-            %imwrite(mask_hsv, [dirname_new1 '/mask_hsv_' toSplit{1,2} '.png']);
-            imwrite(mask_hsv, strjoin([dirname_new '/mask_hsv_' toSplit(2) '.png'],''));
+            imwrite(mask_hsv, strjoin([dirname_new '/mask.' toSplit(2) '.HSV.png'],''));
 
             case 'Lab'
             % L lightness (luminance) (darkest black = 0 and brightest white at 100)
@@ -80,7 +79,7 @@ function createTrainMask(struct, dirname, dirname_new, pixel_method)
 
             mask_lab = red3 | blue3;
 
-            imwrite(mask_lab, strjoin([dirname_new '/mask_lab_' toSplit(2) '.png'],''));
+            imwrite(mask_lab, strjoin([dirname_new '/mask.' toSplit(2) '.LAB.png'],''));
         end   
     end
 end

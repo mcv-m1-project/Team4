@@ -8,7 +8,7 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
     %    'dirname'          Current directory of each struct signl type
     %    'dirname_new'      New directory to copy the new split array
     
-    dirname_new = ['train_split/mask/' dirname_new];
+    dirname_new = ['train_split_validation/mask/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new);
     j = ( length(struct) - round(0.3*length(struct)) ) + 1;
 
@@ -33,7 +33,6 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
 
             mask_rgb = red1 | blue1; 
 
-            %imwrite(mask_rgb, [dirname_new1 '/mask_rgb_' toSplit{1,2} '.png']);
             imwrite(mask_rgb, strjoin([dirname_new '/mask.' toSplit(2) '.RGB.png'],''));
 
          case 'HSV'
@@ -55,7 +54,6 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
 
             mask_hsv = red2 | blue2;
 
-            %imwrite(mask_hsv, [dirname_new1 '/mask_hsv_' toSplit{1,2} '.png']);
             imwrite(mask_hsv, strjoin([dirname_new '/mask.' toSplit(2) '.HSV.png'],''));
 
         case 'Lab'
@@ -81,7 +79,6 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
 
             mask_lab = red3 | blue3;
 
-            %imwrite(mask_lab, [dirname_new1 '/mask_lab_' toSplit{1,2} '.png']);
             imwrite(mask_lab, strjoin([dirname_new '/mask.' toSplit(2) '.LAB.png'],''));
         end   
     end
