@@ -20,3 +20,8 @@ The other folder is gonna be created in "/validation_split/mask" with the masks 
 Run Task4, at the end you will have all the average parameters for each kind of color space that we have worked in (RGB,HSB &LAB).
 
 Run Task5, converting an RGB image into normalized RGB removes the effect of any intensity variations.
+
+
+Task3_test and function"createValidationMasktest" are only for making the masks of the dataset test in order to upload them in the virtual server.
+they need to be inicialized in the directory where test is. ex:
+/desktop/test2016/ --> test is here
