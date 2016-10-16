@@ -3,9 +3,9 @@ function [Metodo] = TesteigImatges (structed, train_split,dirname,dirname_new,pi
 kRGB=0;
 kHSV=0;
 kLab=0;
-j = ( length(struct) - round(0.3*length(struct)) ) + 1;
+j = ( length(structed) - round(0.3*length(structed)) ) + 1;
 
-for i=j:length(struct)
+for i=j:length(structed)
     switch pixel_method
         
         case 'RGB'
