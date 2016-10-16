@@ -1,4 +1,4 @@
-dirname = '/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/train';
+dirname = 'train';
 dirname_new = 'validation_split/mask';
 
 Metodo_RGB_A = TesteigImatges(sA,vA,[dirname '/mask'],[dirname_new '/A'],'RGB');
