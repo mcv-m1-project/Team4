@@ -1,4 +1,4 @@
-dirname = 'train';
+dirname = '/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/train';
 dirname_new = 'validation_split/mask';
 
 Metodo_RGB_A = TesteigImatges(sA,vA,[dirname '/mask'],[dirname_new '/A'],'RGB');
@@ -26,7 +26,7 @@ Metodo_HSV_F = TesteigImatges(sF,vF,[dirname '/mask'],[dirname_new '/F'],'HSV');
 Metodo_Lab_F = TesteigImatges(sF,vF,[dirname '/mask'],[dirname_new '/F'],'Lab');
 
 % RGB
-% Calculate the average for the different signals separeted 
+% Calculate the average of the variables (TP,FP,FN,TN,Precision,Recall,etc) for the different signals separeted 
 RGB_A_avg = calculateAverage(Metodo_RGB_A);
 RGB_B_avg = calculateAverage(Metodo_RGB_B);
 RGB_C_avg = calculateAverage(Metodo_RGB_C);
@@ -34,6 +34,7 @@ RGB_D_avg = calculateAverage(Metodo_RGB_D);
 RGB_E_avg = calculateAverage(Metodo_RGB_E);
 RGB_F_avg = calculateAverage(Metodo_RGB_F);
 
+% Calculate the final value of every variable
 RGB_TP = RGB_A_avg.NumberTP + RGB_B_avg.NumberTP + RGB_C_avg.NumberTP +  RGB_D_avg.NumberTP +  RGB_E_avg.NumberTP +  RGB_F_avg.NumberTP;
 RGB_TP = RGB_TP/6;
 RGB_FP = RGB_A_avg.NumberFP + RGB_B_avg.NumberFP + RGB_C_avg.NumberFP +  RGB_D_avg.NumberFP +  RGB_E_avg.NumberFP +  RGB_F_avg.NumberFP;
@@ -56,6 +57,7 @@ RGB_Recall = [RGB_A_avg.Recall, RGB_B_avg.Recall, RGB_C_avg.Recall, RGB_D_avg.Re
 RGB_Recall = mean(RGB_Recall(:));
      
 % HSV
+% Calculate the average of the variables (TP,FP,FN,TN,Precision,Recall,etc) for the different signals separeted 
 HSV_A_avg = calculateAverage(Metodo_HSV_A);
 HSV_B_avg = calculateAverage(Metodo_HSV_B);
 HSV_C_avg = calculateAverage(Metodo_HSV_C);
@@ -63,6 +65,7 @@ HSV_D_avg = calculateAverage(Metodo_HSV_D);
 HSV_E_avg = calculateAverage(Metodo_HSV_E);
 HSV_F_avg = calculateAverage(Metodo_HSV_F);
 
+% Calculate the final value of every variable
 HSV_TP = HSV_A_avg.NumberTP + HSV_B_avg.NumberTP + HSV_C_avg.NumberTP +  HSV_D_avg.NumberTP +  HSV_E_avg.NumberTP +  HSV_F_avg.NumberTP;
 HSV_TP = HSV_TP/6;
 HSV_FP = HSV_A_avg.NumberFP + HSV_B_avg.NumberFP + HSV_C_avg.NumberFP +  HSV_D_avg.NumberFP +  HSV_E_avg.NumberFP +  HSV_F_avg.NumberFP;
@@ -85,6 +88,7 @@ HSV_Recall = [HSV_A_avg.Recall, HSV_B_avg.Recall, HSV_C_avg.Recall, HSV_D_avg.Re
 HSV_Recall = mean(HSV_Recall(:));
 
 % Lab
+% Calculate the average of the variables (TP,FP,FN,TN,Precision,Recall,etc) for the different signals separeted 
 Lab_A_avg = calculateAverage(Metodo_Lab_A);
 Lab_B_avg = calculateAverage(Metodo_Lab_B);
 Lab_C_avg = calculateAverage(Metodo_Lab_C);
@@ -92,6 +96,7 @@ Lab_D_avg = calculateAverage(Metodo_Lab_D);
 Lab_E_avg = calculateAverage(Metodo_Lab_E);
 Lab_F_avg = calculateAverage(Metodo_Lab_F);
 
+% Calculate the final value of every variable
 Lab_TP = Lab_A_avg.NumberTP + Lab_B_avg.NumberTP + Lab_C_avg.NumberTP +  Lab_D_avg.NumberTP +  Lab_E_avg.NumberTP +  Lab_F_avg.NumberTP;
 Lab_TP = Lab_TP/6;
 Lab_FP = Lab_A_avg.NumberFP + Lab_B_avg.NumberFP + Lab_C_avg.NumberFP +  Lab_D_avg.NumberFP +  Lab_E_avg.NumberFP +  Lab_F_avg.NumberFP;
