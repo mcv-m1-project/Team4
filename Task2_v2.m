@@ -8,6 +8,13 @@ copySplitFile(sD,dirname,'D');
 copySplitFile(sE,dirname,'E');
 copySplitFile(sF,dirname,'F');
 
+copyValidationFile(sA,dirname,'A');
+copyValidationFile(sB,dirname,'B');
+copyValidationFile(sC,dirname,'C');
+copyValidationFile(sD,dirname,'D');
+copyValidationFile(sE,dirname,'E');
+copyValidationFile(sF,dirname,'F');
+
 tSignal = length(sA) + length(sB) + length(sC) + length(sD) + length(sE) + length(sF);
 
 tA = round(0.7*length(sA));
