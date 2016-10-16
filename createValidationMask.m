@@ -8,7 +8,7 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
     %    'dirname'          Current directory of each struct signl type
     %    'dirname_new'      New directory to copy the new split array
     
-    dirname_new = ['train_split_validation/mask/' dirname_new];
+    dirname_new = ['validation_split/mask/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new);
     j = ( length(struct) - round(0.3*length(struct)) ) + 1;
 

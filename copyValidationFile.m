@@ -8,7 +8,7 @@ function copyValidationFile(struct, dirname, dirname_new)
     %    'dirname'          Current directory of each struct signal type
     %    'dirname_new'      New directory to copy the new split array
     
-    dirname_new = ['train_split_validation/' dirname_new];
+    dirname_new = ['validation_split/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new);
     j = ( length(struct) - round(0.3*length(struct)) ) + 1;
     

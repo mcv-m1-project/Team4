@@ -1,8 +1,6 @@
 %% -------------------  Task 3  -------------------  %%
 
 dirname = 'train_split';
-dirname_new = 'train_split/mask';
-[s, mess, messid] = mkdir(dirname_new);
 
 % Test Mask
 createTrainMask(sA, [dirname '/A'], 'A','RGB');
@@ -27,6 +25,8 @@ createTrainMask(sE, [dirname '/E'], 'E','Lab');
 createTrainMask(sF, [dirname '/F'], 'F','Lab');
 
 % Validation Mask
+dirname = 'validation_split';
+
 createValidationMask(sA, [dirname '/A'], 'A','RGB');
 createValidationMask(sB, [dirname '/B'], 'B','RGB');
 createValidationMask(sC, [dirname '/C'], 'C','RGB');
