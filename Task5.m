@@ -1,64 +1,52 @@
-% Normalizing RGB image
-% https://es.mathworks.com/matlabcentral/newsreader/view_thread/171190
-% Converting an RGB image into normalized RGB removes the effect of any intensity variations.
+%% -------------------    Task 5   -------------------  %%
 
-Image_rgb = imread('00.005872.jpg');
-Image_rgb = double(Image_rgb);
-figure;imshow(uint8(Image_rgb));
+% RGB LUM
+dirname = 'validation_split';
+dirname_new = 'validation_split/mask';
 
-Image_red = Image_rgb(:,:,1); %We separate the 3 color channels
-Image_green = Image_rgb(:,:,2);
-Image_blue = Image_rgb(:,:,3);
+createValidationMask(sA, [dirname '/A'], 'LUM-A','RGB-LUM');
+createValidationMask(sB, [dirname '/B'], 'LUM-B','RGB-LUM');
+createValidationMask(sC, [dirname '/C'], 'LUM-C','RGB-LUM');
+createValidationMask(sD, [dirname '/D'], 'LUM-D','RGB-LUM');
+createValidationMask(sE, [dirname '/E'], 'LUM-E','RGB-LUM');
+createValidationMask(sF, [dirname '/F'], 'LUM-F','RGB-LUM');
 
+disp('Done');
 
-[row,col] = size(Image_rgb(:,:,1));
+dirname = 'train';
+Metodo_RGBLUM_A = TesteigNImatges(sA, [dirname '/mask'], [dirname_new '/LUM-A'], 'RGB-LUM');
+Metodo_RGBLUM_B = TesteigNImatges(sB, [dirname '/mask'], [dirname_new '/LUM-B'], 'RGB-LUM');
+Metodo_RGBLUM_C = TesteigNImatges(sC, [dirname '/mask'], [dirname_new '/LUM-C'], 'RGB-LUM');
+Metodo_RGBLUM_D = TesteigNImatges(sD, [dirname '/mask'], [dirname_new '/LUM-D'], 'RGB-LUM');
+Metodo_RGBLUM_E = TesteigNImatges(sE, [dirname '/mask'], [dirname_new '/LUM-E'], 'RGB-LUM');
+Metodo_RGBLUM_F = TesteigNImatges(sF, [dirname '/mask'], [dirname_new '/LUM-F'], 'RGB-LUM');
 
-for y = 1:row %-->numberof rows in image
-   for x = 1:col %-->number of columns in the image
-      Red = Image_red(y,x); %Value of every pixel
-      Green = Image_green(y,x);
-      Blue = Image_blue(y,x);
+% RGB
+% Calculate the average for the different signals separeted 
+RGB_A_avg = calculateAverage(Metodo_RGBLUM_A);
+RGB_B_avg = calculateAverage(Metodo_RGBLUM_B);
+RGB_C_avg = calculateAverage(Metodo_RGBLUM_C);
+RGB_D_avg = calculateAverage(Metodo_RGBLUM_D);
+RGB_E_avg = calculateAverage(Metodo_RGBLUM_E);
+RGB_F_avg = calculateAverage(Metodo_RGBLUM_F);
 
-    NormalizedRed = Red/sqrt(Red^2 + Green^2 + Blue^2); %Normalize
-    NormalizedGreen = Green/sqrt(Red^2 + Green^2 + Blue^2);
-    NormalizedBlue = Blue/sqrt(Red^2 + Green^2 + Blue^2);
-
-    Image_red(y,x) = NormalizedRed;
-    Image_green(y,x) = NormalizedGreen;
-    Image_blue(y,x) = NormalizedBlue;
-   end
-end
-
-Image_rgb(:,:,1) = Image_red;
-Image_rgb(:,:,2) = Image_green;
-Image_rgb(:,:,3) = Image_blue;
-
-figure(2)
-imshow(Image_rgb);
-%Image_rgb = Image_rgb .* Image_rgb;
-%Image_rgb = Image_rgb .* Image_rgb;
-
-%Segmentation part
-
-im_R = Image_red; % channel red
-im_G = Image_green; % channel green
-im_B = Image_blue; % channel blue
-
-            % Otsu's Method: 
-thresh_R = multithresh(im_R,3); %
-thresh_G = multithresh(im_G,3); 
-thresh_B = multithresh(im_B,3); 
-
-            % RGB space
-red1 = (im_R > thresh_R(3)) & (im_B < thresh_B(2)) & (im_G < thresh_G(2)); % red mask
-blue1 = (im_R < thresh_R(2)) & (im_B > thresh_B(3)) & (im_G < thresh_G(2)); % blue mask          
-            
-            
-% red1 = (im_R > 0.7) & (im_B < 0.55) & (im_G < 0.55); % red mask
-% blue1 = (im_R < 0.55) & (im_B > 0.7) & (im_G < 0.55); % blue mask
-
-mask_rgb = red1 | blue1; 
-
-figure(3)
-imshow(mask_rgb);
-
+RGB_TP = RGB_A_avg.NumberTP + RGB_B_avg.NumberTP + RGB_C_avg.NumberTP +  RGB_D_avg.NumberTP +  RGB_E_avg.NumberTP +  RGB_F_avg.NumberTP;
+RGB_TP = RGB_TP/6;
+RGB_FP = RGB_A_avg.NumberFP + RGB_B_avg.NumberFP + RGB_C_avg.NumberFP +  RGB_D_avg.NumberFP +  RGB_E_avg.NumberFP +  RGB_F_avg.NumberFP;
+RGB_FP = RGB_FP/6;
+RGB_FN = RGB_A_avg.NumberFN + RGB_B_avg.NumberFN + RGB_C_avg.NumberFN +  RGB_D_avg.NumberFN +  RGB_E_avg.NumberFN +  RGB_F_avg.NumberFN;
+RGB_FN = RGB_FN/6;
+RGB_TN = RGB_A_avg.NumberTN + RGB_B_avg.NumberTN + RGB_C_avg.NumberTN +  RGB_D_avg.NumberTN +  RGB_E_avg.NumberTN +  RGB_F_avg.NumberTN;
+RGB_TN = RGB_TN/6;
+RGB_Precision = [RGB_A_avg.Precision, RGB_B_avg.Precision, RGB_C_avg.Precision, RGB_D_avg.Precision, RGB_E_avg.Precision, RGB_F_avg.Precision];
+RGB_Precision = mean(RGB_Precision(:));
+RGB_Accuracy = [RGB_A_avg.Accuracy, RGB_B_avg.Accuracy, RGB_C_avg.Accuracy, RGB_D_avg.Accuracy, RGB_E_avg.Accuracy, RGB_F_avg.Accuracy];
+RGB_Accuracy = mean(RGB_Accuracy(:));
+RGB_Specifity = [RGB_A_avg.Specifity, RGB_B_avg.Specifity, RGB_C_avg.Specifity, RGB_D_avg.Specifity, RGB_E_avg.Specifity, RGB_F_avg.Specifity];
+RGB_Specifity = mean(RGB_Specifity(:));
+RGB_Sensivity = [RGB_A_avg.Sensivity, RGB_B_avg.Sensivity, RGB_C_avg.Sensivity, RGB_D_avg.Sensivity, RGB_E_avg.Sensivity, RGB_F_avg.Sensivity];
+RGB_Sensivity = mean(RGB_Sensivity);
+RGB_F1 = [RGB_A_avg.F1, RGB_B_avg.F1, RGB_C_avg.F1, RGB_D_avg.F1, RGB_E_avg.F1, RGB_F_avg.F1];
+RGB_F1 = mean(RGB_F1(:));
+RGB_Recall = [RGB_A_avg.Recall, RGB_B_avg.Recall, RGB_C_avg.Recall, RGB_D_avg.Recall, RGB_E_avg.Recall, RGB_F_avg.Recall];
+RGB_Recall = mean(RGB_Recall(:));
