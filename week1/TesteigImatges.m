@@ -1,92 +1,107 @@
-function [Metodo] = TesteigImatges (structed, train_split,dirname,dirname_new,pixel_method)
+function [Metodo] = TesteigImatges (structed, train_split, dirname, dirtest, pixel_method)
+    % TesteigImatges
+    % CheckPerfomrmance for each method (RGB, HSV, LAB & RGB-LUM)
+    % 
+    %    Parameter name      Value
+    %    --------------      -----
+    %    'structed'         Matrix struct of A, B, C, D, E or F type
+    %    'train_split'      Lenght of Validation Split (30%)
+    %    'dirname'          Current directory of each struct signl type
+    %    'dirtest'          Current directory of test masks
+    %    'pixel_method'     Method (RGB, HSV, LAB, RGB-LUM)
+    
+    k = 1;
+    j = ( length(structed) - train_split ) + 1;
+    Metodo = [];
 
-kRGB=0;
-kHSV=0;
-kLab=0;
-j = ( length(structed) - round(0.3*length(structed)) ) + 1;
-
-for i=j:length(structed)
-    switch pixel_method
-        
-        case 'RGB'
+    for i=j:length(structed)
         toSplit = strsplit(structed{i}.name,{'gt.','.txt'}); 
-
         mask_truth = imread(fullfile(dirname, strjoin(['mask.' toSplit(2) '.png'],'')));
         M1 = graythresh(mask_truth); % Get level threshold to convert then in a binary image
         M2 = im2bw(mask_truth,M1); % Convert image to binary image
-     
         mask_truth=M2;
-        mask_totest= imread(fullfile(dirname_new, strjoin(['mask.' toSplit(2) '.RGB.png'],'')));
-        
-        [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
-        [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
-        
-        Recall=(pixelTP)/(pixelTP+pixelFN);
-        F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
-        if isnan(F1)==1
-            F1=0;
-            Recall=0;
-            pixelPrecision=0;
-            pixelSensitivity=0;
-        end
+
+        switch pixel_method
+
+            case 'RGB'
+                mask_totest= imread(fullfile(dirtest, strjoin(['mask.' toSplit(2) '.RGB.png'],'')));
+
+                [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
+                [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
+
+                Recall=(pixelTP)/(pixelTP+pixelFN);
+                F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
+                if isnan(F1)==1
+                    F1=0;
+                    Recall=0;
+                    pixelPrecision=0;
+                    pixelSensitivity=0;
+                end
+
+                Metodo{k,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
+                k = k + 1;
+
+            case 'HSV'
+                mask_totest= imread(fullfile(dirtest, strjoin(['mask.' toSplit(2) '.HSV.png'],'')));
+
+                [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
+                [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
+
+                Recall=(pixelTP)/(pixelTP+pixelFN);
+                F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
+
+                if isnan(F1)==1
+                    F1=0;
+                    Recall=0;
+                    pixelPrecision=0;
+                    pixelSensitivity=0;
+                end
+
+                Metodo{k,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
+                k = k + 1;
+
+            case 'Lab'      
+                mask_totest= imread(fullfile(dirtest, strjoin(['mask.' toSplit(2) '.LAB.png'],'')));
+
+                [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
+                [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
+
+                Recall=(pixelTP)/(pixelTP+pixelFN);
+                F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
+
+                 if isnan(F1)==1
+                    F1=0;
+                    Recall=0;
+                    pixelPrecision=0;
+                    pixelSensitivity=0;
+                 end
+
+                Metodo{k,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall); 
+                k = k + 1;
+
+            case 'RGB-LUM'
+                mask_totest = imread(fullfile(dirtest, strjoin(['mask.' toSplit(2) '.RGB-LUM.png'],'')));
+
+                [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
+                [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
+
+                Recall=(pixelTP)/(pixelTP+pixelFN);
+                F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
+                
+                if isnan(F1)
+                    F1=0;
+                    Recall=0;
+                    pixelPrecision=0;
+                    pixelSensitivity=0;
+                end
+                
+                Metodo{k,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
+                k = k + 1;
             
-        kRGB=kRGB+1;
-        Metodo{kRGB,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
-        
-        case 'HSV'
-        toSplit = strsplit(structed{i}.name,{'gt.','.txt'}); 
+            otherwise
+                disp('Incorrect Pixel Method.');
 
-        mask_truth = imread(fullfile(dirname, strjoin(['mask.' toSplit(2) '.png'],'')));
-        mask_truth = imread(fullfile(dirname, strjoin(['mask.' toSplit(2) '.png'],'')));
-        M1 = graythresh(mask_truth); % Get level threshold to convert then in a binary image
-        M2 = im2bw(mask_truth,M1); % Convert image to binary image
-        mask_truth=M2;
-        
-        mask_totest= imread(fullfile(dirname_new, strjoin(['mask.' toSplit(2) '.HSV.png'],'')));
-        
-        
-        [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
-        [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
-        
-        Recall=(pixelTP)/(pixelTP+pixelFN);
-        F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
-        
-        if isnan(F1)==1
-            F1=0;
-            Recall=0;
-            pixelPrecision=0;
-            pixelSensitivity=0;
         end
-        
-        kHSV=kHSV+1;        
-        Metodo{kHSV,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall);
-        
-        case 'Lab'
-        toSplit = strsplit(structed{i}.name,{'gt.','.txt'}); 
-
-        mask_truth = imread(fullfile(dirname, strjoin(['mask.' toSplit(2) '.png'],'')));
-        mask_truth = imread(fullfile(dirname, strjoin(['mask.' toSplit(2) '.png'],'')));
-        M1 = graythresh(mask_truth); % Get level threshold to convert then in a binary image
-        M2 = im2bw(mask_truth,M1); % Convert image to binary image
-        mask_truth=M2;
-        
-        mask_totest= imread(fullfile(dirname_new, strjoin(['mask.' toSplit(2) '.LAB.png'],'')));
-        
-        [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
-        [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);
-        
-        Recall=(pixelTP)/(pixelTP+pixelFN);
-        F1=(2*pixelPrecision*Recall)/(pixelPrecision+Recall);
-        
-         if isnan(F1)==1
-            F1=0;
-            Recall=0;
-            pixelPrecision=0;
-            pixelSensitivity=0;
-         end
-        
-        kLab=kLab+1;
-        Metodo{kLab,1}=struct('NumberTP', pixelTP, 'NumberFP', pixelFP, 'NumberFN', pixelFN, 'NumberTN', pixelTN, 'Precision', pixelPrecision, 'Accuracy', pixelAccuracy, 'Specifity', pixelSpecificity, 'Sensivity', pixelSensitivity,'F1',F1,'Recall',Recall); 
     end
-end
+    
 end
