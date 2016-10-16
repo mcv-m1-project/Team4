@@ -18,7 +18,7 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
         im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
         switch pixel_method
 
-		case 'RGB'
+	case 'RGB'
             im_R = im(:,:,1); % channel red
             im_G = im(:,:,2); % channel green
             im_B = im(:,:,3); % channel blue
@@ -36,7 +36,7 @@ function createValidationMask(struct, dirname, dirname_new, pixel_method)
 
             imwrite(mask_rgb, strjoin([dirname_new '/mask.' toSplit(2) '.RGB.png'],''));
 
-		case 'HSV'
+	case 'HSV'
             % HSV space 
             im_hsv = rgb2hsv(im);
             im_H = im_hsv(:,:,1);
