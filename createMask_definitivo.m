@@ -1,13 +1,15 @@
-function createMask(struct,train_split,dirname,dirname_new,pixel_method)
+function createMask_definitivo(struct,train_split,dirname,dirname_new,pixel_method)
 
-    dirname_new1 = ['train_split/mask/' dirname_new];
+    dirname_new1 = ['train_split_validation/mask/' dirname_new];
     [s, mess, messid] = mkdir(dirname_new1);
-
-for i = 1:train_split
     
-    toSplit = strsplit(struct{i}.name,{'gt.','.txt'}); 
+    j= length(struct) - (round(0.3*length(struct)));
+    
+for i = 1:train_split
+    toSplit = strsplit(struct{j}.name,{'gt.','.txt'}); 
     im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
-
+    j=j+1;
+    
 switch pixel_method
 
     case 'RGB'
