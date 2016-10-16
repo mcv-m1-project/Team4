@@ -1,6 +1,6 @@
 function copySplitFile(struct, dirname, dirname_new)
     % copySplitFile
-    % Split and separate each signal type in a new directory
+    % Split and separate each signal type for the Split Test in a new directory
     %
     %    Parameter name      Value
     %    --------------      -----
@@ -19,9 +19,9 @@ function copySplitFile(struct, dirname, dirname_new)
             imgSplit = fullfile(dirname, strjoin([toSplit(2) '.jpg'],''));
             maskSplit = fullfile([dirname '/mask'], strjoin(['mask.' toSplit(2) '.png'],''));
             
-            copyfile(txtSplit, dirname_new); % copy txt files at new diretory train_split
-            copyfile(imgSplit, dirname_new); % copy img files at new diretory train_split
-            copyfile(maskSplit, dirname_new); % copy mask files at new diretory train_split
+            copyfile(txtSplit, dirname_new); % copy txt files at new diretory
+            copyfile(imgSplit, dirname_new); % copy img files at new diretory
+            copyfile(maskSplit, dirname_new); % copy mask files at new diretory
         end
         disp(['Folder created successfully (' pwd '/' dirname_new ')']);
     else
