@@ -1,5 +1,13 @@
 function [sA, sB, sC, sD, sE, sF] = getParameters(txtFiles, maskFiles, dirname)
-
+    % getParameters
+    % Get each signal type from all datasets and get its parameters in a struct value
+    %
+    %    Parameter name      Value
+    %    --------------      -----
+    %    'txtFiles'         All Txt Files /gt
+    %    'maskFiles'        All PNG Mask Files /mask
+    %    'dirname'          Current directory of all dataset
+    
     kA = 0; kB = 0; kC = 0; kD = 0; kE = 0; kF = 0; % k Index to each signal type
     repeat = 0; tTestSignals = 0; % Test Debug
     
