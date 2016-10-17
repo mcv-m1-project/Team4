@@ -1,10 +1,11 @@
 function [sABC, sDF, sE] = getParameters(txtFiles, maskFiles, dirname)
     % getParameters
     % Get each signal type from all datasets and get its parameters in a struct value
+    %
     % Split Files in:	ABC (Red-White-Black)
-	% 					DF	(Blue-White-Black)
-	% 					E	(Red-Blue)
-	%
+    % 			DF	(Blue-White-Black)
+    % 			E	(Red-Blue)
+    %
     %    Parameter name      Value
     %    --------------      -----
     %    'txtFiles'         All Txt Files /gt
