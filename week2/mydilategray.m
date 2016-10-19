@@ -1,6 +1,6 @@
 function Dilation = mydilategray(im,se)
 % mydilatengray
-    % Generate a erosioned image from an imput image 
+    % Generate a dilated image from an imput image 
     %
     %    Parameter name      Value
     %    --------------      -----
