@@ -8,7 +8,10 @@ function [Opening] = myOpening(im,se)
     %    'im'               Input image
     %    'se'               Structuring element
     
-    imEroded = myErosion(im,se);
-    Opening = mydilategray(imEroded,se);
+    erosion = myerosiongray(im,se);
+    Opening = mydilategray(erosion,se);
 
 end
+
+figure; imshow(erosion);
+figure; imshow(Opening);
