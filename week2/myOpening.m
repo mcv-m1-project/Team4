@@ -1,4 +1,4 @@
-function [Opening] = myOpening(im,se)
+function Opening = myOpening(im,se)
 % myOpening
     % Performe the operator Opening that is a combination of Erosion and
     % Dilation
@@ -8,7 +8,7 @@ function [Opening] = myOpening(im,se)
     %    'im'               Input image
     %    'se'               Structuring element
     
-    erosion = myerosiongray(im,se);
-    Opening = mydilategray(erosion,se);
+    Erosion = myerosiongray(im,se);
+    Opening = mydilategray(Erosion,se);
 
 end
