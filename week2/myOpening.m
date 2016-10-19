@@ -12,6 +12,3 @@ function [Opening] = myOpening(im,se)
     Opening = mydilategray(erosion,se);
 
 end
-
-figure; imshow(erosion);
-figure; imshow(Opening);
