@@ -13,6 +13,7 @@ nbins=[100,100];
 Histogram2D_ABC = createHistogram(sABC, dirname, 'ABC',nbins);
 Histogram2D_DF = createHistogram(sDF, dirname, 'DF',nbins);
 Histogram2D_E = createHistogram(sE, dirname, 'E_img',nbins);
+%%
 
 HistogramBackProjection(sABC,[dirname '/'],nbins,'ABC',Histogram2D_ABC)
 HistogramBackProjection(sDF,[dirname '/'],nbins,'DF',Histogram2D_DF)
