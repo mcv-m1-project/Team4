@@ -1,6 +1,4 @@
-function Histogram2D = createHistogram(struct,dirname,dirname_s)
-
-nbins = [125,125];
+function Histogram2D = createHistogram(struct,dirname,dirname_s,nbins)
 
 Histogram2D = zeros(nbins);
 
@@ -33,7 +31,6 @@ Histogram2D = Histogram2D + hist3([H,S],nbins);
 
 end
 
-Histogram2D = Histogram2D/sum(Histogram2D);
+Histogram2D = Histogram2D/sum(sum(Histogram2D));
 
 end
-
