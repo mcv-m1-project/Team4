@@ -1,11 +1,12 @@
-function HistogramBackProjection = HistogramBackProjection(struct,dirname1,nbins,dirname_new)
+function HistogramBackProjection = HistogramBackProjection(struct,dirname1,nbins,dirname_new,Histogram)
 
-dirname = ['test/' dirname1];
-dirnamecreate= ['test/' dirname_new];
+dirnamecreate= ['test/Masks/' dirname_new];
+[s, mess, messid] = mkdir(dirnamecreate);
+
 for i = 1:length(struct)
 
 toSplit = strsplit(struct{i}.name,{'gt.','.txt'});
-im = imread(fullfile(dirname, strjoin([toSplit(2) '.jpg'],'')));
+im = imread(fullfile(dirname1, strjoin([toSplit(2) '.jpg'],'')));
 
 im_hsv = rgb2hsv(im);
 H = im_hsv(:,:,1);
@@ -16,9 +17,9 @@ mask=size(im);
 
 for i = 1:size(H,1)
    for j = 1:size(H,2)
-   X=H(i,j)/nbins;
-   Y=S(i,j)/nbins;
-   Prob=struct(X,Y);
+   X=round(H(i,j)*(nbins(1)-1)+1);
+   Y=round(S(i,j)*(nbins(2)-1)+1);
+   Prob=Histogram(X,Y);
    if Prob>=0.001
        mask(i,j)=1;
    else
@@ -27,7 +28,9 @@ for i = 1:size(H,1)
    end
 end
 
-imwrite(mask, strjoin([dirnamecreate '/' toSplit(1) '.png'],''));
+imwrite(mask, strjoin([dirnamecreate '/' toSplit(2) '_' dirname_new '.png'],''));
 
 end
 end
+
+   
