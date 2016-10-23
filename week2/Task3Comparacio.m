@@ -7,29 +7,31 @@ sD = dir(fullfile([dirname '/D'],'*.png'));
 sE = dir(fullfile([dirname '/E'],'*.png'));
 sF = dir(fullfile([dirname '/F'],'*.png'));
 
-Metodo_RGB_A = TesteigMask(sA,[dirname '/A'],[dirname_new '/A'],'RGB');
-Metodo_HSV_A = TesteigMask(sA,[dirname '/A'],[dirname_new '/A'],'HSV');
-Metodo_Lab_A = TesteigMask(sA,[dirname '/A'],[dirname_new '/A'],'Lab');
+dirname='test/mask';
 
-Metodo_RGB_B = TesteigMask(sB,[dirname '/B'],[dirname_new '/B'],'RGB');
-Metodo_HSV_B = TesteigMask(sB,[dirname '/B'],[dirname_new '/B'],'HSV');
-Metodo_Lab_B = TesteigMask(sB,[dirname '/B'],[dirname_new '/B'],'Lab');
+Metodo_RGB_A = TesteigMask(sA,[dirname],[dirname_new '/A'],'RGB');
+Metodo_HSV_A = TesteigMask(sA,[dirname],[dirname_new '/A'],'HSV');
+Metodo_Lab_A = TesteigMask(sA,[dirname],[dirname_new '/A'],'Lab');
 
-Metodo_RGB_C = TesteigMask(sC,[dirname '/C'],[dirname_new '/C'],'RGB');
-Metodo_HSV_C = TesteigMask(sC,[dirname '/C'],[dirname_new '/C'],'HSV');
-Metodo_Lab_C = TesteigMask(sC,[dirname '/C'],[dirname_new '/C'],'Lab');
+Metodo_RGB_B = TesteigMask(sB,[dirname],[dirname_new '/B'],'RGB');
+Metodo_HSV_B = TesteigMask(sB,[dirname],[dirname_new '/B'],'HSV');
+Metodo_Lab_B = TesteigMask(sB,[dirname],[dirname_new '/B'],'Lab');
 
-Metodo_RGB_D = TesteigMask(sD,[dirname '/D'],[dirname_new '/D'],'RGB');
-Metodo_HSV_D = TesteigMask(sD,[dirname '/D'],[dirname_new '/D'],'HSV');
-Metodo_Lab_D = TesteigMask(sD,[dirname '/D'],[dirname_new '/D'],'Lab');
+Metodo_RGB_C = TesteigMask(sC,[dirname],[dirname_new '/C'],'RGB');
+Metodo_HSV_C = TesteigMask(sC,[dirname],[dirname_new '/C'],'HSV');
+Metodo_Lab_C = TesteigMask(sC,[dirname],[dirname_new '/C'],'Lab');
 
-Metodo_RGB_E = TesteigMask(sE,[dirname '/E'],[dirname_new '/E'],'RGB');
-Metodo_HSV_E = TesteigMask(sE,[dirname '/E'],[dirname_new '/E'],'HSV');
-Metodo_Lab_E = TesteigMask(sE,[dirname '/E'],[dirname_new '/E'],'Lab');
+Metodo_RGB_D = TesteigMask(sD,[dirname],[dirname_new '/D'],'RGB');
+Metodo_HSV_D = TesteigMask(sD,[dirname],[dirname_new '/D'],'HSV');
+Metodo_Lab_D = TesteigMask(sD,[dirname],[dirname_new '/D'],'Lab');
 
-Metodo_RGB_F = TesteigMask(sF,[dirname '/F'],[dirname_new '/F'],'RGB');
-Metodo_HSV_F = TesteigMask(sF,[dirname '/F'],[dirname_new '/F'],'HSV');
-Metodo_Lab_F = TesteigMask(sF,[dirname '/F'],[dirname_new '/F'],'Lab');
+Metodo_RGB_E = TesteigMask(sE,[dirname],[dirname_new '/E'],'RGB');
+Metodo_HSV_E = TesteigMask(sE,[dirname],[dirname_new '/E'],'HSV');
+Metodo_Lab_E = TesteigMask(sE,[dirname],[dirname_new '/E'],'Lab');
+
+Metodo_RGB_F = TesteigMask(sF,[dirname],[dirname_new '/F'],'RGB');
+Metodo_HSV_F = TesteigMask(sF,[dirname],[dirname_new '/F'],'HSV');
+Metodo_Lab_F = TesteigMask(sF,[dirname],[dirname_new '/F'],'Lab');
 
 % RGB
 % Calculate the average for the different signals separeted 
