@@ -13,4 +13,15 @@ Inside "Task3Comparacio" there are implemented the functions:
                               
 If you want to execute 2nd part of Task 3 (used as an improvement for the test masks of week1 to upload to the virtual server) you need to discomment the 2nd part and to comment the 1st one.
 Also you need a directory inside 'test/test/images' where you have all the images and another called 'test/test/masks' where you have the masks to improve.
-                              
+     
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Task4 is used to compute the Histograms of the first week validation test images.
+
+From directory'/train' we read all the masks and .txt.
+
+Then we use function "GetParameters" to adquire all the parameters of the different masks (a struct with the brx, bly, filling ratio, etc).
+
+Then in the function "CreateHistogram" not only we create the histogram for each type of signals (ABC, DF & E) but we also create the directories for them (original images).
+
+Finally, inside "HistogramBackProjection" We compare our images with the histograms in order to create the masks that we are gonna test.
