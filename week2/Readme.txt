@@ -1,4 +1,21 @@
+Task1:
 
+This Task is computed by the different functions called:
+-myerosiongray
+-mydilategray
+-myTopHat
+-myOpening
+-myErosion (only BW picture)
+-myDualTopHat
+-MyClosing
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Task2:
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Task3:
 
 Task3 is used to Improve our mask with the commands Opening, Closing, Dilation, etc. from Matlab.
 To Execute Task3 you need to have a directory name called 'test' where the masks from week 1 are separated in order the different traffic signals (A, B, C,etc). 
@@ -14,7 +31,9 @@ Inside "Task3Comparacio" there are implemented the functions:
 If you want to execute 2nd part of Task 3 (used as an improvement for the test masks of week1 to upload to the virtual server) you need to discomment the 2nd part and to comment the 1st one.
 Also you need a directory inside 'test/test/images' where you have all the images and another called 'test/test/masks' where you have the masks to improve.
      
-------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Task4:
 
 Task4 is used to compute the Histograms of the first week validation test images.
 
