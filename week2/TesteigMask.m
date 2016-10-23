@@ -1,4 +1,4 @@
-function [Metodo] = TesteigMask (structed, dirname, dirtest, pixel_method)
+function [Metodo] = TesteigMask (structed, dirname, dirtest, pixel_method,f)
     % TesteigImatges
     % CheckPerfomrmance for each method (RGB, HSV, LAB & RGB-LUM)
     % 
@@ -14,42 +14,19 @@ function [Metodo] = TesteigMask (structed, dirname, dirtest, pixel_method)
     j = (length(structed));
     Metodo = [];
 
-    if pixel_method == 'RGB'
-        o=3; 
-    elseif pixel_method == 'Lab'
-            o=2;
-    else 
-            o=1;
-    end
+    for i=1:j
         
-    for i=o:3:j
-        
-        if o==3
-        toSplit=strsplit(structed(i).name,{'.RGB.png'});
-        mask_truth = imread(fullfile(dirname,strjoin([toSplit(1) '.png'],'')));
+        toSplit=strsplit(structed(i).name,{f}); 
+        mask_truth = imread(fullfile(dirname,strjoin(['mask.' toSplit(1) '.png'],'')));
         M1 = graythresh(mask_truth); % Get level threshold to convert then in a binary image
         M2 = im2bw(mask_truth,M1); % Convert image to binary image
-        mask_truth=M2;
-        elseif o==2
-        toSplit=strsplit(structed(i).name,{'.LAB.png'}); 
-        mask_truth = imread(fullfile(dirname,strjoin([toSplit(1) '.png'],'')));
-        M1 = graythresh(mask_truth); % Get level threshold to convert then in a binary image
-        M2 = im2bw(mask_truth,M1); % Convert image to binary image
-        mask_truth=M2;
-        else o==1
-        toSplit=strsplit(structed(i).name,{'.HSV.png'});
-        mask_truth = imread(fullfile(dirname,strjoin([toSplit(1) '.png'],'')));
-        M1 = graythresh(mask_truth); % Get level threshold to convert then in a binary image
-        M2 = im2bw(mask_truth,M1); % Convert image to binary image
-        mask_truth=M2;
-        end
-        
-             
+        mask_truth = M2;
+              
        switch pixel_method
 
             case 'RGB'
                                
-                 mask_totest= imread(fullfile(dirtest, structed(i).name));
+                mask_totest= imread(fullfile(dirtest, structed(i).name));
 
                 [pixelTP, pixelFP, pixelFN, pixelTN] = PerformanceAccumulationPixel(mask_totest, mask_truth);
                 [pixelPrecision, pixelAccuracy, pixelSpecificity, pixelSensitivity] = PerformanceEvaluationPixel(pixelTP, pixelFP, pixelFN, pixelTN);

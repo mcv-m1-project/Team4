@@ -1,18 +1,16 @@
-dirname = 'test';
+dirname = 'test/Masks';
 dirname_new = 'test/Masks';
-sA = dir(fullfile([dirname '/Masks/ABC'],'*.png')); % Get all .png files
-sB = dir(fullfile([dirname '/Masks/DF'],'*.png'));
-sC = dir(fullfile([dirname 'Masks/E_img'],'*.png'));
+sABC = dir(fullfile([dirname '/ABC'],'*.png')); % Get all .png files
+sDF = dir(fullfile([dirname '/DF'],'*.png'));
+sE = dir(fullfile([dirname '/E'],'*.png'));
 
+dirname1 = 'test/mask';
 
+Metodo_HSV_ABC = TesteigMask(sABC,dirname1,[dirname_new '/ABC'],'HSV','_ABC.png');
 
-Metodo_HSV_ABC = TesteigMask(sA,[dirname '/A'],[dirname_new '/ABC'],'HSV');
+Metodo_HSV_DF = TesteigMask(sDF,dirname1,[dirname_new '/DF'],'HSV','_DF.png');
 
-Metodo_HSV_DF = TesteigMask(sB,[dirname '/B'],[dirname_new '/DF'],'HSV');
-
-Metodo_HSV_E = TesteigMask(sC,[dirname '/C'],[dirname_new '/E'],'HSV');
-
-
+Metodo_HSV_E = TesteigMask(sE,dirname1,[dirname_new '/E'],'HSV','_E.png');
 
 % RGB
 % Calculate the average for the different signals separeted 
@@ -43,4 +41,3 @@ HSV_F1 = [HSV_ABC_avg.F1, HSV_DF_avg.F1, HSV_E_avg.F1];
 HSV_F1 = mean(HSV_F1(:));
 HSV_Recall = [HSV_ABC_avg.Recall, HSV_DF_avg.Recall, HSV_E_avg.Recall];
 HSV_Recall = mean(HSV_Recall(:));
-
