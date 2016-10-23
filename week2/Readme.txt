@@ -13,6 +13,8 @@ This Task is computed by the different functions called:
 
 Task2:
 
+Task2 is used to compare the results between the functions created for us (called before, "myerosiongray", "mydilategray", etc) and the original functions ("imrode", "imdilate", etc). 
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 Task3:
