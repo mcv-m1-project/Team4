@@ -3,9 +3,9 @@ function HistogramBackProjection = HistogramBackProjection(struct,dirname1,nbins
 dirnamecreate= ['test/Masks/' dirname_new];
 [s, mess, messid] = mkdir(dirnamecreate);
 
-SE = strel('disk',5);
+SE = strel('disk',3);
 disk = double(SE.getnhood());
-threshold=0.001;
+%threshold=0.001;
 
 for i = 1:length(struct)
 
@@ -43,6 +43,7 @@ end
 Back=min(Back,1);
 Back = conv2(Back,disk,'same');
 Back=Back/max(max(Back));
+threshold = 0.01 * max(max(Back));
 mask=Back>threshold;
 
 
