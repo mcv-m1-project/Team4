@@ -44,3 +44,7 @@ Then we use function "GetParameters" to adquire all the parameters of the differ
 Then in the function "CreateHistogram" not only we create the histogram for each type of signals (ABC, DF & E) but we also create the directories for them (original images).
 
 Finally, inside "HistogramBackProjection" We compare our images with the histograms in order to create the masks that we are gonna test.
+
+
+In order to present the masks of the different images of the "Test" in order to upload them inside the virtual server, it is necessary to discomment part 2 of Task4 and to comment part1.
+Inside this part2, the function used is gonna be "HistogramBackProjectiontest".
