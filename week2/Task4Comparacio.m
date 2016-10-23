@@ -11,9 +11,6 @@ Metodo_HSV_ABC = TesteigMask(sABC,dirname1,[dirname_new '/ABC'],'HSV','_ABC.png'
 Metodo_HSV_DF = TesteigMask(sDF,dirname1,[dirname_new '/DF'],'HSV','_DF.png');
 
 Metodo_HSV_E = TesteigMask(sE,dirname1,[dirname_new '/E'],'HSV','_E.png');
-
-% RGB
-% Calculate the average for the different signals separeted 
     
 % HSV
 HSV_ABC_avg = calculateAverage(Metodo_HSV_ABC);
