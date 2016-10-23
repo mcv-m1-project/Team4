@@ -1,10 +1,10 @@
-dirname='/Users/Toni/Desktop/Toni/Master/ProjectMaterials/Week 1/Code/train';
+dirname = 'train';
 
 imagefiles=dir(fullfile([dirname],'*.jpg'));
 se=ones(3,3);
 
 
-for i = 1:10
+for i = 1:100
 
     im = imread(fullfile([dirname],imagefiles(i).name));
     img = rgb2gray(im);
