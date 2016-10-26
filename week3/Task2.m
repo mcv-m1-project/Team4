@@ -5,18 +5,17 @@ im_height = size(im,1);
 w_width = 32;
 w_height = 32;
 
-window = true(im_height,im_width);
+window = true(w_height,w_width);
 
 for i = 1:(im_height - w_height)
     for j = 1:(im_width - w_width)
-        window(i:i + (w_height - 1),j:j + (w_width - 1)) = im(i:i + (w_height - 1), j:j + (w_width - 1));
-            if sum(window) >  
-                
-                
-            end
+        window = im(i:i + (w_height - 1), j:j + (w_width - 1));
+%         ratio = 1;
+%         
+%         if sum(window) >  
+%                 
+%                 
+%             end
     end
 end
 
-imshow(im);
-
-imshow(window);
