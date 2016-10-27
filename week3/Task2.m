@@ -68,27 +68,28 @@ for i = 1:(im_height - w_height)
     end
 end
 
-% dd = 1;
-% for i = 1:10:length(w_position)
-%     if abs(w_position(i,2) - w_position((i+9),2)) < 10 
-%     delete(dd) = i;
-%     dd = dd+1;
-%     end
-% end
+dd = 1;
+delete = 0;
+for i = 1:(length(w_position)-1)
+    if w_position(i,2) == w_position((i+1),2)
+        delete(dd) = i;
+        dd = dd + 1;  
+    end
+end
 
-% w_position(delete,:) = [];
+w_position(delete,:) = []; % delete boxes
 
-%% 
+%% Plot of the image and all the boxes
+
 imshow(im); %Plot the image and the boxes
 hold on
 for k = 1:size(w_position,1)
     rectangle('position',w_position(k,:),'Edgecolor','g')
 end
-%%
 
-% prova amb una imatge
+%% Plot of the image and only one box
+
 imshow(im); %Plot the image and the boxes
 hold on
-rectangle('position',w_position(75,:),'Edgecolor','g')
+rectangle('position',w_position(1,:),'Edgecolor','g')
   
-
