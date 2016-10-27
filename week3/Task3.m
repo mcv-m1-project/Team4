@@ -7,14 +7,15 @@ w_height = 32;
 
 window = zeros(w_height,w_width);
 
-inte = integralImage(im);
+%inte = integralImage(im);
+inte2=cumsum(cumsum(double(im)),2);                 %Transparencias clase de como realizar integral
 
 for i = 1:(im_height - w_height)
     for j = 1:(im_width - w_width)
         window = im(i:i + (w_height - 1), j:j + (w_width - 1));
         
-        regionSum = inte(i+w+h,j+w-h+1) + inte(i,j+1) - inte(i+h,j-h+1) - inte(i+w,j+w+1);
-        
+        %regionSum = inte(i+w+h,j+w-h+1) + inte(i,j+1) - inte(i+h,j-h+1) - inte(i+w,j+w+1);
+        regionSum= inte2(i+w_heigth-1,j+w_width-1)+inte2(i,j)-inte2(i,j+w_width-1)-inte2(i+w_height-1,j);   
         %http://es.mathworks.com/help/images/ref/integralimage.html
 %         ratio = 1;
 %         
