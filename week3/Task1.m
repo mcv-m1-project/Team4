@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-dirname = 'mejora';
+dirname = 'mejora/A';
 maskFiles = dir(fullfile([dirname],'*.png')); % Get all .png files
 
 for i = 1:length(maskFiles)
@@ -38,15 +38,25 @@ for i = 1:length(maskFiles)
     fr(k) = fratio;
 
     end
-
+    
+    if(delete~=0)
     boundingboxes(delete,:) = []; %We eliminate the objects that can't be a signal 
     fr(:,delete) = [];
     
-    if size(boundingboxes,1) > 1
-        ListOfBbox(i,:) = boundingboxes(:)';
-    else  
-        ListOfBbox(i,:) = boundingboxes;
+    if(~isempty(boundingboxes))
+    CCboxes(i) = struct( 'x', boundingboxes(:,1), ... 
+               'y', boundingboxes(:,2), ... 
+               'width', boundingboxes(:,3), ... 
+               'height', boundingboxes(:,4) );  
+    
     end
+    end
+    
+%     if size(boundingboxes,1) > 1
+%         ListOfBbox(i,:) = boundingboxes(:)';
+%     else  
+%         ListOfBbox(i,:) = boundingboxes;
+%     end
 end
 
 %% Result: List Of Bounding Boxes containing a detection
@@ -54,7 +64,6 @@ end
 save ListOfBbox 
 
 %% 
-
 imshow(im); %Plot the image and the boxes
 hold on
 for k = 1:size(boundingboxes,1)
@@ -62,7 +71,7 @@ for k = 1:size(boundingboxes,1)
 end
 hold off
 
-CCboxes = struct( 'x', boundingboxes(:,1), ... 
-               'y', boundingboxes(:,2), ... 
-               'width', boundingboxes(:,3), ... 
-               'height', boundingboxes(:,4) );  
+% CCboxes = struct( 'x', boundingboxes(:,1), ... 
+%                'y', boundingboxes(:,2), ... 
+%                'width', boundingboxes(:,3), ... 
+%                'height', boundingboxes(:,4) );  
