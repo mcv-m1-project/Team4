@@ -2,8 +2,8 @@ clear all
 close all
 clc
 
-dirname = 'mejora/A';
-maskFiles = dir(fullfile([dirname],'*.png')); % Get all .png files
+dirname = 'mask';
+maskFiles = dir(fullfile([dirname],'*HSV.png')); % Get all .png files
 
 for i = 1:length(maskFiles)
 
@@ -11,10 +11,10 @@ for i = 1:length(maskFiles)
 
     CC = bwconncomp(im);
     nobj = CC.NumObjects;
-    stats = regionprops(CC,'BoundingBox');
-    fA = regionprops(CC,'FilledArea');
+    stats = regionprops(CC,'BoundingBox','Extent');
 
     boundingboxes = cat(1,stats.BoundingBox);
+    fr = cat(1,stats.Extent);
 
 %Filtering part
 
@@ -27,29 +27,30 @@ for i = 1:length(maskFiles)
     d = 1;
     for k = 1:size(boundingboxes,1)
         ratio(k) = boundingboxes(k,3) ./ boundingboxes(k,4);
-        bbarea = boundingboxes(k,3) .* boundingboxes(k,4);
-        fratio = fA(k).FilledArea / bbarea;
-        if((boundingboxes(k,3)<30)||(boundingboxes(k,4)<30)||(ratio(k)<0.9)||(ratio(k)>1.1))
-        % if((fratio>0.45)||(fratio<1.1)||(ratio(k)<0.9)||(ratio(k)>1.1))
-        delete(d) = k;
-        d = d + 1;
-    end
-    
-    fr(k) = fratio;
-
+        % if((boundingboxes(k,3)<30)||(boundingboxes(k,4)<30)||(ratio(k)<0.9)||(ratio(k)>1.1))
+        %if((fr(k) > 0.45) && (fr(k) < 1.1) || (ratio(k) < 0.9) || (ratio(k) > 1.1))
+        if ((fr(k) > 0.4 && fr(k) < 0.6) || (fr(k) > 0.7 && fr(k) < 0.85) || (fr(k) > 0.9 && fr(k) <= 1)) && ((boundingboxes(k,3) > 30) || (boundingboxes(k,4)>30)) && ((ratio(k) > 0.8) && (ratio(k) < 1.2))
+        else    
+            delete(d) = k;
+            d = d + 1;
+        end
     end
     
     if(delete~=0)
     boundingboxes(delete,:) = []; %We eliminate the objects that can't be a signal 
-    fr(:,delete) = [];
+    fr(delete,:) = [];
+    end
     
     if(~isempty(boundingboxes))
     CCboxes(i) = struct( 'x', boundingboxes(:,1), ... 
                'y', boundingboxes(:,2), ... 
                'width', boundingboxes(:,3), ... 
-               'height', boundingboxes(:,4) );  
-    
-    end
+               'height', boundingboxes(:,4));
+    else
+        CCboxes(i) = struct( 'x', 0, ... 
+               'y', 0, ... 
+               'width', 0, ... 
+               'height', 0);
     end
     
 %     if size(boundingboxes,1) > 1
@@ -57,21 +58,35 @@ for i = 1:length(maskFiles)
 %     else  
 %         ListOfBbox(i,:) = boundingboxes;
 %     end
+
+imshow(im)
+hold on
+for j = 1:length(CCboxes(i).x)
+rectangle('position',[CCboxes(i).x(j), CCboxes(i).y(j), CCboxes(i).width(j), CCboxes(i).height(j)],'Edgecolor','g')
+end
+pause();
 end
 
 %% Result: List Of Bounding Boxes containing a detection
 
-save ListOfBbox 
+save CCboxes 
 
 %% 
+
 imshow(im); %Plot the image and the boxes
 hold on
-for k = 1:size(boundingboxes,1)
-    rectangle('position',boundingboxes(k,:),'Edgecolor','g')
+for k = 1:size(CCboxes,2)
+    rectangle('position',CCboxes(k,:),'Edgecolor','g')
 end
 hold off
 
 % CCboxes = struct( 'x', boundingboxes(:,1), ... 
 %                'y', boundingboxes(:,2), ... 
 %                'width', boundingboxes(:,3), ... 
-%                'height', boundingboxes(:,4) );  
+%                'height', boundingboxes(:,4) ); 
+ 
+%% 
+
+imshow(im); %Plot the image and the boxes
+hold on
+rectangle('position',[CCboxes(2).x, CCboxes(2).y, CCboxes(2).width, CCboxes(2).height],'Edgecolor','g')
