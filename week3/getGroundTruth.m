@@ -1,6 +1,6 @@
 function gt = getGroundTruth(txtFiles, dirname)
-    % getParameters
-    % Get each signal type from all datasets and get its parameters in a struct value
+    % getGroundTruth
+    % Get each getGroundTruth from all datasets
     %
     %    Parameter name      Value
     %    --------------      -----
@@ -8,7 +8,7 @@ function gt = getGroundTruth(txtFiles, dirname)
     %    'dirname'          Current directory of all dataset
     
     
-    disp('Getting Original BoundingBox ...');
+    disp('Getting Originals Ground Truth ...');
     for k = 1:length(txtFiles)
         j = 1; % Index to count number of each signal type
         a = 0; % Test Debug
