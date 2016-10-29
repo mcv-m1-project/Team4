@@ -1,4 +1,4 @@
-function gt = getParameters(txtFiles, dirname)
+function gt = getGroundTruth(txtFiles, dirname)
     % getParameters
     % Get each signal type from all datasets and get its parameters in a struct value
     %
