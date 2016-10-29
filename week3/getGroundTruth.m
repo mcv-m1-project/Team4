@@ -1,6 +1,6 @@
-function gt = getParameters(txtFiles, dirname)
-    % getParameters
-    % Get each signal type from all datasets and get its parameters in a struct value
+function gt = getGroundTruth(txtFiles, dirname)
+    % getGroundTruth
+    % Get each getGroundTruth from all datasets
     %
     %    Parameter name      Value
     %    --------------      -----
@@ -8,10 +8,9 @@ function gt = getParameters(txtFiles, dirname)
     %    'dirname'          Current directory of all dataset
     
     
-    disp('Getting Original BoundingBox ...');
+    disp('Getting Originals Ground Truth ...');
     for k = 1:length(txtFiles)
         j = 1; % Index to count number of each signal type
-        a = 0; % Test Debug
 
         fileTxt = fullfile([dirname '/gt'], txtFiles(k).name); % File by File
 
@@ -24,10 +23,12 @@ function gt = getParameters(txtFiles, dirname)
             tlx{k,1}(j) = dataTxt{k}{2}(j); % save minX
             bry{k,1}(j) = dataTxt{k}{3}(j); % save maxY  
             brx{k,1}(j) = dataTxt{k}{4}(j); % save maxX
-            type{k,1}(j) = dataTxt{k}{5}(j); % save signal type
-            gt{k,1}(j,:) = [tlx{k,1}(j), tly{k,1}(j), brx{k,1}(j), bry{k,1}(j)]; % Ground Truth (bounding box) [minX minY maxX maxY]
+            width{k,1}(j) = abs(brx{k,1}(j) - tlx{k,1}(j)); % widht of each Ground Truth (maxX-minX)
+            height{k,1}(j) = abs(bry{k,1}(j) - tly{k,1}(j)); % height of each Ground Truth (maxY-minY)
 
-            j=j+1;  
+            gt{k,1}(j,1) = struct( 'x', tlx{k,1}(j), 'y', tly{k,1}(j), 'width', width{k,1}(j), 'height', height{k,1}(j));
+            
+            j=j+1;
         end
 
         fclose all;                        
