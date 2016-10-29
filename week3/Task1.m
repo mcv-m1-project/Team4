@@ -2,9 +2,9 @@ clear all
 close all
 clc
 
-dirname = 'mask';
+dirname = 'mejora';
 maskFiles = dir(fullfile([dirname],'*HSV.png')); % Get all .png files
-
+tic
 for i = 1:length(maskFiles)
 
     im = imread(fullfile([dirname],maskFiles(i).name));
@@ -28,8 +28,8 @@ for i = 1:length(maskFiles)
     for k = 1:size(boundingboxes,1)
         ratio(k) = boundingboxes(k,3) ./ boundingboxes(k,4);
         % if((boundingboxes(k,3)<30)||(boundingboxes(k,4)<30)||(ratio(k)<0.9)||(ratio(k)>1.1))
-        %if((fr(k) > 0.45) && (fr(k) < 1.1) || (ratio(k) < 0.9) || (ratio(k) > 1.1))
-        if ((fr(k) > 0.4 && fr(k) < 0.6) || (fr(k) > 0.7 && fr(k) < 0.85) || (fr(k) > 0.9 && fr(k) <= 1)) && ((boundingboxes(k,3) > 30) || (boundingboxes(k,4)>30)) && ((ratio(k) > 0.8) && (ratio(k) < 1.2))
+        % if((fr(k) > 0.45) && (fr(k) < 1.1) || (ratio(k) < 0.9) || (ratio(k) > 1.1))
+        if ((fr(k) > 0.4 && fr(k) < 0.6) || (fr(k) > 0.7 && fr(k) < 0.85) || (fr(k) > 0.9 && fr(k) <= 1)) && ((boundingboxes(k,3) > 30) || (boundingboxes(k,4) > 30)) && ((ratio(k) > 0.8) && (ratio(k) < 1.2))
         else    
             delete(d) = k;
             d = d + 1;
@@ -37,20 +37,20 @@ for i = 1:length(maskFiles)
     end
     
     if(delete~=0)
-    boundingboxes(delete,:) = []; %We eliminate the objects that can't be a signal 
-    fr(delete,:) = [];
+        boundingboxes(delete,:) = []; %We eliminate the objects that can't be a signal 
+        fr(delete,:) = [];
     end
     
     if(~isempty(boundingboxes))
-    CCboxes(i) = struct( 'x', boundingboxes(:,1), ... 
+        CCboxes(i,:) = struct('x', boundingboxes(:,1), ... 
                'y', boundingboxes(:,2), ... 
-               'width', boundingboxes(:,3), ... 
-               'height', boundingboxes(:,4));
+               'w', boundingboxes(:,3), ... 
+               'h', boundingboxes(:,4));
     else
-        CCboxes(i) = struct( 'x', 0, ... 
+        CCboxes(i,:) = struct( 'x', 0, ... 
                'y', 0, ... 
-               'width', 0, ... 
-               'height', 0);
+               'w', 0, ... 
+               'h', 0);
     end
     
 %     if size(boundingboxes,1) > 1
@@ -59,16 +59,19 @@ for i = 1:length(maskFiles)
 %         ListOfBbox(i,:) = boundingboxes;
 %     end
 
-imshow(im)
-hold on
-for j = 1:length(CCboxes(i).x)
-rectangle('position',[CCboxes(i).x(j), CCboxes(i).y(j), CCboxes(i).width(j), CCboxes(i).height(j)],'Edgecolor','g')
+% imshow(im)
+% hold on
+% for j = 1:length(CCboxes(i).x)
+% rectangle('position',[CCboxes(i).x(j), CCboxes(i).y(j), CCboxes(i).width(j), CCboxes(i).height(j)],'Edgecolor','g')
+% end
+% pause();
 end
-pause();
-end
+
+timeTask1 = toc;
 
 %% Result: List Of Bounding Boxes containing a detection
 
+% save as .mat file
 save CCboxes 
 
 %% 

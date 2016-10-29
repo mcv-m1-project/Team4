@@ -1,4 +1,4 @@
-function gt = getGroundTruth(txtFiles, dirname)
+function gt = getGroundTruth(gtTxtFiles, dirname)
     % getGroundTruth
     % Get each getGroundTruth from all datasets
     %
@@ -9,11 +9,11 @@ function gt = getGroundTruth(txtFiles, dirname)
     
     
     disp('Getting Originals Ground Truth ...');
-    for k = 1:length(txtFiles)
+    for k = 1:length(gtTxtFiles)
         j = 1; % Index to count number of each signal type
-
-        fileTxt = fullfile([dirname '/gt'], txtFiles(k).name); % File by File
-
+        
+        toSplit = strsplit(gtTxtFiles(k).name,{'mask.','.HSV.png'}); 
+        fileTxt = fullfile([dirname '/gt'], strjoin(['gt.' toSplit(2) '.txt'],'')); % File by File
         fileTxtID = fopen(fileTxt);
         dataTxt{k,1} = textscan(fileTxtID,'%f %f %f %f %s');
         size = length(dataTxt{k}{1}); % Number of signals for each txt file
@@ -26,7 +26,7 @@ function gt = getGroundTruth(txtFiles, dirname)
             width{k,1}(j) = abs(brx{k,1}(j) - tlx{k,1}(j)); % widht of each Ground Truth (maxX-minX)
             height{k,1}(j) = abs(bry{k,1}(j) - tly{k,1}(j)); % height of each Ground Truth (maxY-minY)
 
-            gt{k,1}(j,1) = struct( 'x', tlx{k,1}(j), 'y', tly{k,1}(j), 'width', width{k,1}(j), 'height', height{k,1}(j));
+            gt(k,:) = struct('x', tlx{k,1}(j), 'y', tly{k,1}(j), 'w', width{k,1}(j), 'h', height{k,1}(j));
             
             j=j+1;
         end

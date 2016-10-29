@@ -2,21 +2,22 @@ close all
 clear all
 clc
 
-dirname = 'train';
-w = getWindowSize(dirname);
+dirTxt = 'train';
+w = getWindowSize(dirTxt); % Get Optimal Width and Height using TxtFiles
 
 w_width = w;
 w_height = w;
 
 window = zeros(w_height,w_width);
 window_area = w_height*w_width;
-dirname1 = 'mejora';
-maskFiles = dir(fullfile(dirname1,'*HSV.png')); % Get all .png files
+dirMask = 'mejora';
+maskFiles = dir(fullfile(dirMask,'*HSV.png')); % Get all .png files
 w_position = cell(length(maskFiles),1);
 
+tic
 for k = 1:length(maskFiles)
 
-im = imread(fullfile(dirname1,maskFiles(k).name)); % read the image
+im = imread(fullfile(dirMask,maskFiles(k).name)); % read the image
 im_width = size(im,2);
 im_height = size(im,1);
 
@@ -43,7 +44,7 @@ if (~isempty(w_position{k}))
     w_position{k} = w_position{k}(1:10:end,:);
 end
 end
-
+timeTask2 = toc;
 % dd = 1;
 % delete = 0;
 % for i = 1:(length(w_position) - 1)
@@ -55,20 +56,25 @@ end
 
 % w_position(delete,:) = []; % delete boxes
 
+%% Result: List Of Bounding Boxes containing a detection
+
+% save as .mat file
+save w_position
+
 %% Plot of the image and all the boxes
 
 for k = 1:length(maskFiles)
-    imshow(imread(fullfile(dirname1,maskFiles(k).name))); %Plot the image and the boxes
+    imshow(imread(fullfile(dirname1,maskFiles(k).name)));
     hold on
     for d = 1:length(w_position{k,1})
-    rectangle('position',w_position{k}(d,:),'Edgecolor','g')
+        rectangle('position',w_position{k}(d,:),'Edgecolor','g')
     end
     pause();
 end
 
 %% Plot of the image and only one box
 
-imshow(im); %Plot the image and the boxes
+imshow(im);
 hold on
 rectangle('position',w_position(1,:),'Edgecolor','g')
   

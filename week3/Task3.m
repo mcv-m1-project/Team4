@@ -4,8 +4,8 @@ close all
 clear all
 clc
 
-dirTxt = '../train';
-dirMask = '../mejora';
+dirTxt = 'train';
+dirMask = 'mejora';
 
 w = getWindowSize(dirTxt); % Get Optimal Width and Height using TxtFiles
 w_width = w;
@@ -15,16 +15,15 @@ window = zeros(w_height,w_width);
 window_area = w_height*w_width;
 
 maskFiles = dir(fullfile(dirMask,'*HSV.png')); % Get all HSV.png files
-w_position = cell(length(maskFiles),1); % Preallocate Memory for a Cell Array
+i_position = cell(length(maskFiles),1); % Preallocate Memory for a Cell Array
 
-for k = 1:2 %length(maskFiles)
+tic
+for k = 1:length(maskFiles)
     
     im = imread(fullfile(dirMask,maskFiles(k).name)); % read each image
     im_width = size(im,2);
     im_height = size(im,1);
     
-    % im = imread('mejora/A/mask.01.001796.HSV.png'); % read the image
-
     %inte = integralImage(im);
     inte2 = cumsum(cumsum(double(im)),2);
 
@@ -39,32 +38,38 @@ for k = 1:2 %length(maskFiles)
             fr = regionSum / window_area;
             
             if (fr > 0.4 && fr < 0.6) || (fr > 0.7 && fr < 0.85) || (fr > 0.9 && fr <= 1)
-                w_position{k}(d,:) = [j, i, w_height, w_width];
+                i_position{k}(d,:) = [j, i, w_height, w_width];
                 d = d + 1;
             end
         end
     end
     
-    if (~isempty(w_position{k}))
+    if (~isempty(i_position{k}))
         % Get a new windows with Non-Repetitive TopLeft(x,y)
-        [unic, ia] = unique(w_position{k}(:,1));
+        [unic, ia] = unique(i_position{k}(:,1));
         
         % freq = [unic,histc(w_position(:,1),unic)];
-        w_position{k} = w_position{k}(ia,:);
-        w_position{k} = w_position{k}(1:10:end,:); % Only keep a few calulcated windows
+        i_position{k} = i_position{k}(ia,:);
+        i_position{k} = i_position{k}(1:10:end,:); % Only keep a few calulcated windows
     end
     
 end
+timeTask3 = toc;
+
+
+%% Result: List Of Bounding Boxes containing a detection
+
+% save as .mat file
+save i_position
 
 %% Plot of the image and all the boxes
 
-for k = 1:2 %length(maskFiles)
+for k = 1:length(maskFiles)
     imshow(imread(fullfile(dirMask,maskFiles(k).name))); %Plot the image and the boxes
     hold on
     
-    for d = 1:length(w_position{k,1})
-        rectangle('position',w_position{k}(d,:),'Edgecolor','g')
+    for d = 1:length(i_position{k,1})
+        rectangle('position',i_position{k}(d,:),'Edgecolor','g')
     end
-    
     pause();
-end              
+end
