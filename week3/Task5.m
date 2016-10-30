@@ -2,7 +2,7 @@ close all
 clear all
 clc
 
-dirTxt = 'train';
+dirTxt = '../train';
 w = getWindowSize(dirTxt); % Get Optimal Width and Height using TxtFiles
 
 w_width = w;
@@ -21,12 +21,12 @@ for k = 1:length(maskFiles)
     im_height = size(im,1);
 
     d = 1;
-    imfilt = conv2(ones(w),double(im));
+    imfilt = conv2(1/window_area*ones(w),double(im));
     
     for i=1:im_height
         for j=1:im_width
             if (imfilt(i,j) > 0.4 && imfilt(i,j) < 0.6) || (imfilt(i,j) > 0.7 && imfilt(i,j) < 0.85) || (imfilt(i,j) > 0.9 && imfilt(i,j) <= 1) 
-                w_pos(d,:) = [j,i,w_width,w_height];
+                w_pos(d,:) = [j-w,i-w,w_width,w_height];
                 d = d + 1;
             end
         end
@@ -43,7 +43,6 @@ for k = 1:length(maskFiles)
         % freq = [unic,histc(w_position(:,1),unic)];
 
     end
-    k
     windowCandidates(k,:) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
     clear w_pos
 end
