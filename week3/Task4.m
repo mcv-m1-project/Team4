@@ -3,7 +3,6 @@
 dirname = 'train';
 dirnameGT = 'mejora';
 gtTxtFiles = dir(fullfile(dirnameGT,'*.HSV.png')); % Get all .txt files
-% txtFiles = dir(fullfile([dirname '/gt'],'*.txt')); % Get all .txt files
 
 gt = getGroundTruth(gtTxtFiles, dirname);
 
