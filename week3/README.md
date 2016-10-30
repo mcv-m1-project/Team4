@@ -9,3 +9,5 @@ In this second Task we implemented the Sliding Window algorithm. To decide the a
 Finally we obtained the windows candidates and we have saved it as a .mat file.
 
 Task 3:
+
+In this third Task we implemented the Integral Image to mprove efficiency of feature computation
