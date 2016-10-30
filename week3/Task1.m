@@ -16,13 +16,13 @@ for i = 1:length(maskFiles)
     boundingboxes = cat(1,stats.BoundingBox);
     fr = cat(1,stats.Extent);
 
-%Filtering part
+    %Filtering part
 
-%We will filter the small objects, the big objecta and the objects with
-%incorrect filling ratio and aspect ratio
-%filling ratio in triangles = 1/2
-%filling ratio in circle = pi/4
-%Correct form factor = 1:1 
+    %We will filter the small objects, the big objecta and the objects with
+    %incorrect filling ratio and aspect ratio
+    %filling ratio in triangles = 1/2
+    %filling ratio in circle = pi/4
+    %Correct form factor = 1:1 
     delete = 0;
     d = 1;
     for k = 1:size(boundingboxes,1)
@@ -36,7 +36,6 @@ for i = 1:length(maskFiles)
     
     if(delete~=0)
         boundingboxes(delete,:) = []; %We eliminate the objects that can't be a signal 
-        %fr(delete,:) = [];
     end
     
     if(~isempty(boundingboxes))
@@ -51,29 +50,20 @@ for i = 1:length(maskFiles)
                'h', 0);
     end
     
-%     if size(boundingboxes,1) > 1
-%         ListOfBbox(i,:) = boundingboxes(:)';
-%     else  
-%         ListOfBbox(i,:) = boundingboxes;
-%     end
-
-% imshow(im)
-% hold on
-% for j = 1:length(CCboxes(i).x)
-% rectangle('position',[CCboxes(i).x(j), CCboxes(i).y(j), CCboxes(i).width(j), CCboxes(i).height(j)],'Edgecolor','g')
-% end
-% pause();
+    % imshow(im)
+    % hold on
+    % for j = 1:length(CCboxes(i).x)
+    % rectangle('position',[CCboxes(i).x(j), CCboxes(i).y(j), CCboxes(i).width(j), CCboxes(i).height(j)],'Edgecolor','g')
+    % end
+    % pause();
 end
 
 timeTask1 = toc;
 
-%% Result: List Of Bounding Boxes containing a detection
-
-% save as .mat file
+%% Save as .mat File
 save windowCandidates 
 
 %% 
-
 imshow(im); %Plot the image and the boxes
 hold on
 for k = 1:size(windowCandidates,2)
@@ -81,16 +71,3 @@ for k = 1:size(windowCandidates,2)
     pause();
 end
 hold off
-
-% CCboxes = struct( 'x', boundingboxes(:,1), ... 
-%                'y', boundingboxes(:,2), ... 
-%                'width', boundingboxes(:,3), ... 
-%                'height', boundingboxes(:,4) ); 
- 
-%% 
-i = 11;
-im = imread(fullfile([dirname],maskFiles(i).name));
-maskFiles(i).name
-imshow(im); %Plot the image and the boxes
-hold on
-rectangle('position',[windowCandidates(i).x, windowCandidates(i).y, windowCandidates(i).w, windowCandidates(i).h],'Edgecolor','g')
