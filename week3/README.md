@@ -12,3 +12,7 @@ Task 3:
 
 In this third Task we implemented the Integral Image to improve efficiency of feature computation. After implementing both methods, we can see that the execution time is reduced.
 Finally we obtained the windows candidates and we have saved it as a .mat file.
+
+Task 4:
+
+In the Task 4, we have evaluated our region-based methods implemented in the tasks before and the one that has been implmented in the Task 5. We load the diferent windowCandidate.mat that we have saved and evaluate the data obtained in the function created testBbox() where we calculate the properties Precision, Recall, Accuracy, F1, True Positive, False Negative and Sensitivity by applying the functions PerformanceAccumulationWindow and PerformanceEvaluationWindow.
