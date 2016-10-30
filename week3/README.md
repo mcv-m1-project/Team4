@@ -16,3 +16,8 @@ Finally we obtained the windows candidates and we have saved it as a .mat file.
 Task 4:
 
 In the Task 4, we have evaluated our region-based methods implemented in the tasks before and the one that has been implmented in the Task 5. We load the diferent windowCandidate.mat that we have saved and evaluate the data obtained in the function created testBbox() where we calculate the properties Precision, Recall, Accuracy, F1, True Positive, False Negative and Sensitivity by applying the functions PerformanceAccumulationWindow and PerformanceEvaluationWindow.
+
+Task 5:
+
+In the optional task, Task 5. We improved efficiency of feature computation using convolutions. After implementing the three methods, we can see that the execution time is reduced.
+Finally we obtained the windows candidates and we have saved it as a .mat file and calculated the properties Precision, Recall, Accuracy, F1, True Positive, False Negative and Sensitivity by applying the functions PerformanceAccumulationWindow and PerformanceEvaluationWindow.
