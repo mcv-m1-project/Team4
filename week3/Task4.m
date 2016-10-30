@@ -1,7 +1,7 @@
 %% ====================== Task 4 (Week 3) ====================== %%
 
-dirname = 'train';
-dirnameGT = 'mejora';
+dirname = '../train';
+dirnameGT = '../HSV';
 gtTxtFiles = dir(fullfile(dirnameGT,'*.HSV.png')); % Get all .txt files
 
 gt = getGroundTruth(gtTxtFiles, dirname);
