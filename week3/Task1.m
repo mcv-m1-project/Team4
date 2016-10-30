@@ -27,8 +27,6 @@ for i = 1:length(maskFiles)
     d = 1;
     for k = 1:size(boundingboxes,1)
         ratio(k) = boundingboxes(k,3) ./ boundingboxes(k,4);
-        % if((boundingboxes(k,3)<30)||(boundingboxes(k,4)<30)||(ratio(k)<0.9)||(ratio(k)>1.1))
-        % if((fr(k) > 0.45) && (fr(k) < 1.1) || (ratio(k) < 0.9) || (ratio(k) > 1.1))
         if ((fr(k) > 0.4 && fr(k) < 0.6) || (fr(k) > 0.7 && fr(k) < 0.85) || (fr(k) > 0.9 && fr(k) <= 1)) && ((boundingboxes(k,3) > 30) || (boundingboxes(k,4) > 30)) && ((ratio(k) > 0.8) && (ratio(k) < 1.2))
         else    
             delete(d) = k;
@@ -38,16 +36,16 @@ for i = 1:length(maskFiles)
     
     if(delete~=0)
         boundingboxes(delete,:) = []; %We eliminate the objects that can't be a signal 
-        fr(delete,:) = [];
+        %fr(delete,:) = [];
     end
     
     if(~isempty(boundingboxes))
-        CCboxes(i,:) = struct('x', boundingboxes(:,1), ... 
+        windowCandidates(i,:) = struct('x', boundingboxes(:,1), ... 
                'y', boundingboxes(:,2), ... 
                'w', boundingboxes(:,3), ... 
                'h', boundingboxes(:,4));
     else
-        CCboxes(i,:) = struct( 'x', 0, ... 
+        windowCandidates(i,:) = struct( 'x', 0, ... 
                'y', 0, ... 
                'w', 0, ... 
                'h', 0);
@@ -72,14 +70,15 @@ timeTask1 = toc;
 %% Result: List Of Bounding Boxes containing a detection
 
 % save as .mat file
-save CCboxes 
+save windowCandidates 
 
 %% 
 
 imshow(im); %Plot the image and the boxes
 hold on
-for k = 1:size(CCboxes,2)
-    rectangle('position',CCboxes(k,:),'Edgecolor','g')
+for k = 1:size(windowCandidates,2)
+    rectangle('position',[windowCandidates(i).x, windowCandidates(i).y, windowCandidates(i).w, windowCandidates(i).h],'Edgecolor','g')
+    pause();
 end
 hold off
 
@@ -89,7 +88,9 @@ hold off
 %                'height', boundingboxes(:,4) ); 
  
 %% 
-
+i = 11;
+im = imread(fullfile([dirname],maskFiles(i).name));
+maskFiles(i).name
 imshow(im); %Plot the image and the boxes
 hold on
-rectangle('position',[CCboxes(2).x, CCboxes(2).y, CCboxes(2).width, CCboxes(2).height],'Edgecolor','g')
+rectangle('position',[windowCandidates(i).x, windowCandidates(i).y, windowCandidates(i).w, windowCandidates(i).h],'Edgecolor','g')
