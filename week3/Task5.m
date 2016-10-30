@@ -3,6 +3,8 @@ clear all
 clc
 
 dirTxt = '../train';
+dirMask = '../HSV';
+
 w = getWindowSize(dirTxt); % Get Optimal Width and Height using TxtFiles
 
 w_width = w;
@@ -10,7 +12,7 @@ w_height = w;
 
 window = zeros(w_height,w_width);
 window_area = w_height*w_width;
-dirMask = 'mejora';
+
 maskFiles = dir(fullfile(dirMask,'*HSV.png')); % Get all .png files
 
 tic
@@ -49,13 +51,10 @@ end
 
 timeTask5 = toc;
 
-%% Result: List Of Bounding Boxes containing a detection
-
-% save as .mat file
+%% Save as .mat File
 save windowCandidates
 
-%%
-
+%% Plot all the images and rectanlges
 for i = 1:length(maskFiles)     
     imshow(imread(fullfile(dirMask,maskFiles(i).name))); %Plot the image and the boxes   
     hold on  
