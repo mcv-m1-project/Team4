@@ -51,14 +51,10 @@ for k = 1:length(maskFiles)
 end
 timeTask3 = toc;
 
-
-%% Result: List Of Bounding Boxes containing a detection
-
-% save as .mat file
+%% Save as .mat File
 save windowCandidates
 
-%% Plot of the image and all the boxes
-
+%% Plot of all the images and rectangles
 for i = 1:length(maskFiles)
     imshow(imread(fullfile(dirMask,maskFiles(i).name)));
     
