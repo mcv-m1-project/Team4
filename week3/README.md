@@ -1,4 +1,6 @@
-Task 1:
+#Week 3 (Team 4)
+
+--Task 1:
 
 In this Task we implemented the Connected Component Labeling (CCL) algorithm. We have used the masks obtained in the masks obtained in the Week 2 after applying morphological operators in the space HSV.
 Finally we obtained the windows candidates and we have saved it as a .mat file.
