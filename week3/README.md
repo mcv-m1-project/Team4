@@ -10,4 +10,5 @@ Finally we obtained the windows candidates and we have saved it as a .mat file.
 
 Task 3:
 
-In this third Task we implemented the Integral Image to mprove efficiency of feature computation
+In this third Task we implemented the Integral Image to improve efficiency of feature computation. After implementing both methods, we can see that the execution time is reduced.
+Finally we obtained the windows candidates and we have saved it as a .mat file.
