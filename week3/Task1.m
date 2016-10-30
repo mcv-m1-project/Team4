@@ -2,7 +2,7 @@ clear all
 close all
 clc
 
-dirname = 'mejora';
+dirname = '../HSV';
 maskFiles = dir(fullfile([dirname],'*HSV.png')); % Get all .png files
 tic
 for i = 1:length(maskFiles)
@@ -39,23 +39,11 @@ for i = 1:length(maskFiles)
     end
     
     if(~isempty(boundingboxes))
-        windowCandidates(i,:) = struct('x', boundingboxes(:,1), ... 
-               'y', boundingboxes(:,2), ... 
-               'w', boundingboxes(:,3), ... 
-               'h', boundingboxes(:,4));
+        windowCandidates(i,:) = struct('x', boundingboxes(:,1), 'y', boundingboxes(:,2), 'w', boundingboxes(:,3), 'h', boundingboxes(:,4));
     else
-        windowCandidates(i,:) = struct( 'x', 0, ... 
-               'y', 0, ... 
-               'w', 0, ... 
-               'h', 0);
+        windowCandidates(i,:) = struct( 'x', 0, 'y', 0, 'w', 0, 'h', 0);
     end
     
-    % imshow(im)
-    % hold on
-    % for j = 1:length(CCboxes(i).x)
-    % rectangle('position',[CCboxes(i).x(j), CCboxes(i).y(j), CCboxes(i).width(j), CCboxes(i).height(j)],'Edgecolor','g')
-    % end
-    % pause();
 end
 
 timeTask1 = toc;
@@ -63,8 +51,8 @@ timeTask1 = toc;
 %% Save as .mat File
 save windowCandidates 
 
-%% 
-imshow(im); %Plot the image and the boxes
+%% %Plot the images and the rectangles
+imshow(im); 
 hold on
 for k = 1:size(windowCandidates,2)
     rectangle('position',[windowCandidates(i).x, windowCandidates(i).y, windowCandidates(i).w, windowCandidates(i).h],'Edgecolor','g')
