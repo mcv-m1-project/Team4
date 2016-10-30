@@ -5,7 +5,7 @@ clear all
 clc
 
 dirTxt = '../train';
-dirMask = '../mejora';
+dirMask = '../HSV';
 
 w = getWindowSize(dirTxt); % Get Optimal Width and Height using TxtFiles
 
