@@ -50,20 +50,29 @@ for k = 1:length(maskFiles)
 %         w_position{k} = w_position{k}(1:10:end,:);
 
         [unic, ia] = unique(w_pos(:,1)); % x vector
-        w_pos = w_position{2};
         w_pos = w_pos(ia,:);
         w_pos = w_pos(1:10:end,:);
     end    
     k
     
-    windowCandidates(k,:) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
+    CCBoxes(:,1) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
     clear w_pos
+    
+    j=1;
+    while j<=length(CCBoxes.x) % for each windowCanidate
+        windowCandidates(j,1) = struct('x', CCBoxes.x(j), 'y', CCBoxes.y(j), 'w', CCBoxes.w(j), 'h', CCBoxes.h(j));
+        j = j + 1;
+    end
+    
+    [pathstr_r,name_r, ext_r] = fileparts(maskFiles(k).name);
+    save ([name_r, '.mat'], 'windowCandidates');
+    clear windowCandidates
     
 end
 timeTask2 = toc;
 
 %% Save as .mat File
-save windowCandidates
+% save windowCandidates
 
 %% Plot of the image and all the boxes
 % for k = 1:length(maskFiles)

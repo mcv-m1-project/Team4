@@ -1,12 +1,13 @@
 function gt = getGroundTruth(gtTxtFiles, dirname)
     % getGroundTruth
-    % Get each getGroundTruth from all datasets
+    % Get each getGroundTruth from all train datasets
     %
     %    Parameter name      Value
     %    --------------      -----
-    %    'txtFiles'         All Txt Files /gt
+    %    'gtTxtFiles'       All Txt Files /gt
     %    'dirname'          Current directory of all dataset
-    
+    %
+    % Return a struct with all of Ground Truth from all train dataset
     
     disp('Getting Originals Ground Truth ...');
     for k = 1:length(gtTxtFiles)

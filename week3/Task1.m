@@ -4,12 +4,12 @@ clear all
 close all
 clc
 
-dirname = '../HSV';
-maskFiles = dir(fullfile([dirname],'*HSV.png')); % Get all .png files
+dirMask = '../HSV';
+maskFiles = dir(fullfile(dirMask,'*HSV.png')); % Get all .png files
 tic
 for i = 1:length(maskFiles)
 
-    im = imread(fullfile([dirname],maskFiles(i).name));
+    im = imread(fullfile(dirMask,maskFiles(i).name));
 
     CC = bwconncomp(im);
     nobj = CC.NumObjects;
@@ -41,23 +41,34 @@ for i = 1:length(maskFiles)
     end
     
     if(~isempty(boundingboxes))
-        windowCandidates(i,:) = struct('x', boundingboxes(:,1), 'y', boundingboxes(:,2), 'w', boundingboxes(:,3), 'h', boundingboxes(:,4));
+        CCBoxes(:,1) = struct('x', boundingboxes(:,1), 'y', boundingboxes(:,2), 'w', boundingboxes(:,3), 'h', boundingboxes(:,4));
     else
-        windowCandidates(i,:) = struct( 'x', 0, 'y', 0, 'w', 0, 'h', 0);
+        CCBoxes(:,1) = struct( 'x', 0, 'y', 0, 'w', 0, 'h', 0);
     end
+    
+    j=1;
+    while j<=length(CCBoxes.x) % for each windowCanidate
+        windowCandidates(j,1) = struct('x', CCBoxes.x(j), 'y', CCBoxes.y(j), 'w', CCBoxes.w(j), 'h', CCBoxes.h(j));
+        j = j + 1;
+    end 
+    [pathstr_r,name_r, ext_r] = fileparts(maskFiles(i).name);
+    save ([name_r, '.mat'], 'windowCandidates');
+    clear windowCandidates
     
 end
 
 timeTask1 = toc;
 
 %% Save as .mat File
-save windowCandidates 
+% save windowCandidates 
 
-%% %Plot the images and the rectangles
-imshow(im); 
-hold on
-for k = 1:size(windowCandidates,2)
-    rectangle('position',[windowCandidates(i).x, windowCandidates(i).y, windowCandidates(i).w, windowCandidates(i).h],'Edgecolor','g')
-    pause();
-end
-hold off
+%% Plot of all the images and rectangles
+% for i = 1:length(maskFiles)
+%     imshow(imread(fullfile(dirMask,maskFiles(i).name)));
+%     
+%     hold on
+%     for j = 1:length(windowCandidates(i).x)
+%         rectangle('position',[windowCandidates(i).x(j), windowCandidates(i).y(j), windowCandidates(i).w(j), windowCandidates(i).h(j)],'Edgecolor','g')
+%     end
+%     pause();
+% end

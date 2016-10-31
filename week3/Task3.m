@@ -15,7 +15,6 @@ window = zeros(w_height,w_width);
 window_area = w_height*w_width;
 
 maskFiles = dir(fullfile(dirMask,'*HSV.png')); % Get all HSV.png files
-i_position = cell(length(maskFiles),1); % Preallocate Memory for a Cell Array
 
 tic
 for k = 1:length(maskFiles)
@@ -46,21 +45,33 @@ for k = 1:length(maskFiles)
         w_pos = w_pos(ia,:);
         w_pos = w_pos(1:10:end,:);
     end
-    windowCandidates(k,:) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
+    k
+    
+    CCBoxes(:,1) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
     clear w_pos
+    
+    j=1;
+    while j<=length(CCBoxes.x) % for each windowCanidate
+        windowCandidates(j,1) = struct('x', CCBoxes.x(j), 'y', CCBoxes.y(j), 'w', CCBoxes.w(j), 'h', CCBoxes.h(j));
+        j = j + 1;
+    end
+    
+    [pathstr_r,name_r, ext_r] = fileparts(maskFiles(k).name);
+    save ([name_r, '.mat'], 'windowCandidates');
+    clear windowCandidates
 end
 timeTask3 = toc;
 
 %% Save as .mat File
-save windowCandidates
+% save windowCandidates
 
 %% Plot of all the images and rectangles
-for i = 1:length(maskFiles)
-    imshow(imread(fullfile(dirMask,maskFiles(i).name)));
-    
-    hold on
-    for j = 1:length(windowCandidates(i).x)
-        rectangle('position',[windowCandidates(i).x(j), windowCandidates(i).y(j), windowCandidates(i).w(j), windowCandidates(i).h(j)],'Edgecolor','g')
-    end
-    pause();
-end
+% for i = 1:length(maskFiles)
+%     imshow(imread(fullfile(dirMask,maskFiles(i).name)));
+%     
+%     hold on
+%     for j = 1:length(windowCandidates(i).x)
+%         rectangle('position',[windowCandidates(i).x(j), windowCandidates(i).y(j), windowCandidates(i).w(j), windowCandidates(i).h(j)],'Edgecolor','g')
+%     end
+%     pause();
+% end

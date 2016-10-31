@@ -1,5 +1,15 @@
 function method = testBbox(ourBbox,gt)
-  
+    % testBbox
+    % Function to compute all the different performance indicators (Precision, accuracy, 
+    % sensitivity/recall) at the object level using provided function: PerformanceEvaluationWindow and PerformanceAccumulationWindow
+    %
+    %    Parameter name      Value
+    %    --------------      -----
+    %    'ourBbox'           Struct with all of windows marked as a candidates for each mask
+    %    'annotations'       Struct with all of ground truths positions of the objects for each mask
+
+    % The function returns a struct with the accumulation TP, FP, FN, Precision, Accuracy, Sensitivy, F1 and Recall
+
     TP = 0; FP = 0; FN = 0; Precision = 0; Accuracy = 0;
     Sensitivity = 0; F1 = 0; Recall = 0;
 

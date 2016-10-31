@@ -38,28 +38,38 @@ for k = 1:length(maskFiles)
         w_pos = [0, 0, 0, 0];
         disp('Empty');
     else
-   
         [unic, ia] = unique(w_pos(:,1)); % x vector
         w_pos = w_pos(ia,:);
         w_pos = w_pos(1:10:end,:);
         % freq = [unic,histc(w_position(:,1),unic)];
-
     end
-    windowCandidates(k,:) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
+    k
+    
+    CCBoxes(:,1) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));
     clear w_pos
+    
+    j=1;
+    while j<=length(CCBoxes.x) % for each windowCanidate
+        windowCandidates(j,1) = struct('x', CCBoxes.x(j), 'y', CCBoxes.y(j), 'w', CCBoxes.w(j), 'h', CCBoxes.h(j));
+        j = j + 1;
+    end
+    
+    [pathstr_r,name_r, ext_r] = fileparts(maskFiles(k).name);
+    save ([name_r, '.mat'], 'windowCandidates');
+    clear windowCandidates
 end
 
 timeTask5 = toc;
 
 %% Save as .mat File
-save windowCandidates
+% save windowCandidates
 
 %% Plot all the images and rectanlges
-for i = 1:length(maskFiles)     
-    imshow(imread(fullfile(dirMask,maskFiles(i).name))); %Plot the image and the boxes   
-    hold on  
-    for j = 1:length(windowCandidates(i).x)       
-        rectangle('position',[windowCandidates(i).x(j), windowCandidates(i).y(j), windowCandidates(i).w(j), windowCandidates(i).h(j)],'Edgecolor','g')    
-    end
-    pause(); 
-end
+% for i = 1:length(maskFiles)     
+%     imshow(imread(fullfile(dirMask,maskFiles(i).name))); %Plot the image and the boxes   
+%     hold on  
+%     for j = 1:length(windowCandidates(i).x)       
+%         rectangle('position',[windowCandidates(i).x(j), windowCandidates(i).y(j), windowCandidates(i).w(j), windowCandidates(i).h(j)],'Edgecolor','g')    
+%     end
+%     pause(); 
+% end

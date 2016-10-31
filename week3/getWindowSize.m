@@ -1,4 +1,12 @@
 function w = getWindowSize(dirname)
+    % getWindowSize
+    % Get the Optimatl Window Size for the window using the provided Txt Files (Bounding Box)
+    %
+    %    Parameter name      Value
+    %    --------------      -----
+    %    'dirname'          Current directory of all dataset
+    %
+    % Return the optimal Window Size
 
 % read it to measure the coordinates, width, height and the bounding box
 txtFiles = dir(fullfile([dirname '/gt'],'*.txt')); % get txt files
