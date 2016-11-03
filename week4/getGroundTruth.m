@@ -4,7 +4,7 @@ function gt = getGroundTruth(dirname, txtFiles)
     %
     %    Parameter name      Value
     %    --------------      -----
-    %    'gtTxtFiles'       All Txt Files /gt
+    %    'txtFiles'         All Txt Files /gt
     %    'dirname'          Current directory of all dataset
     %
     % Return a struct with all of Ground Truth from all train dataset
