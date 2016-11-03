@@ -7,7 +7,7 @@ function [propA, propB, propC, propD, propE, propF] = getProperties(dirname,txtF
     for k = 1:length(txtFiles)
         j = 1; % Index to count number of each signal type
 
-        fileTxtID = fopen(['train/gt/' txtFiles(k).name]);
+        fileTxtID = fopen([dirname '/gt/' txtFiles(k).name]);
         dataTxt{k,1} = textscan(fileTxtID,'%f %f %f %f %s');
         size = length(dataTxt{k}{1}); % Number of signals for each txt file
 
