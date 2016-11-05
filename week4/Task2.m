@@ -2,4 +2,5 @@
 
 dirname = 'train';
 maskFiles = dir(fullfile(dirname ,'*.png'));
-chamfer();
+load('template_edge.mat');
+chamfer(maskFiles,template_edge);
