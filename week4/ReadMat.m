@@ -1,4 +1,4 @@
-function [final] = ReadMat()
+function [final, maskFiles] = ReadMat()
 dirMask = 'onlyTest/singleMatFile/MethodCC';
 maskFiles = dir(fullfile(dirMask,'*HSV.png')); % Get all HSV.png files
 
