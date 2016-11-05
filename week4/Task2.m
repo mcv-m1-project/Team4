@@ -1,6 +1,9 @@
+clear all
+close all
+clc
 
-
-dirname = 'train';
-maskFiles = dir(fullfile(dirname ,'*.png'));
+dirname = 'mejora';
+maskFiles = dir(fullfile(dirname,'*.png'));
+%txtFiles = dir(fullfile([dirname '/gt/'],'*.txt'));
 load('template_edge.mat');
-chamfer(maskFiles,template_edge);
+chamfer(dirname,maskFiles,template_edge);
