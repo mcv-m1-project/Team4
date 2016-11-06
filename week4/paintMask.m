@@ -14,14 +14,12 @@ for p=1:length(structed)
    
            for j=(round(x1(p))):(round(x1(p)+w(p)))
                %for i=(fix(y1(p))):(fix(y1(p)-h(p)))
-               for i=(round(y1(p)-h(p))):(round(y1(p)))
+               for i=(round(y1(p))):(round(y1(p)+h(p)))
                    Im=I{p};
-                   mask(i,j)=Im(i-(round(y1(p)-h(p))-1),j-(round(x1(p))-1));
+                   mask(i,j)=Im((i-(round(y1(p))-1)),(j-(round(x1(p))-1)));
                end
            end
 end
 finalmask=mask;
 end
 
-
-           
