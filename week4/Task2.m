@@ -2,8 +2,9 @@ clear all
 close all
 clc
 
-dirname = 'mejora';
+dirname = 'HSV';
 maskFiles = dir(fullfile(dirname,'*.png'));
-%txtFiles = dir(fullfile([dirname '/gt/'],'*.txt'));
+txtFiles = dir(fullfile([dirname '/gt/'],'*.txt'));
 load('template_edge.mat');
-chamfer(dirname,maskFiles,template_edge);
+w_pos = chamfer(dirname,maskFiles,template_edge);
+
