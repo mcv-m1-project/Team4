@@ -1,8 +1,14 @@
-function chamfer(dirname,maskFiles,template_edge)
+function w_pos = chamfer(dirname,maskFiles,template_edge)
 % B -> maskFiles
 % T -> templatge_edge
+w_pos = [];
 
-    for k = 1:length(maskFiles)
+CircleSizes = 200:260;
+for p = 1:length(CircleSizes)
+    circleedge{p} = CreateCircles(CircleSizes(p));
+end
+
+    for k = 2:10%length(maskFiles)
         %toSplit = strsplit(maskFiles(k).name,{mask.',''});
         mask = imread([dirname, '/', maskFiles(k).name]);
         %mask = imread(strjoin(['mejora/', 'mask.', toSplit(2), '.HSV.png'],''));
@@ -11,20 +17,20 @@ function chamfer(dirname,maskFiles,template_edge)
         ed = edge(mask,'Canny'); % Mask contour from the mask
         D = bwdist(ed,'Euclidean'); % distance transform
         
-%         sizeuptri = size(template_edge.upTri,1);
-%         sizesuptri = round(sizeuptri.*[0.3 0.5 1 1.5 2]);
-%         
-%         sizedowntri = size(template_edge.downTri,1);
-%         sizesdowntri = round(sizedowntri.*[0.3 0.5 1 1.5 2]);
-%         
-%         sizecircle = size(template_edge.circle,1);
-%         sizecircle = round(sizecircle.*[0.3 0.5 1 1.5 2]);
-%         
-%         sizesquare = size(template_edge.square,1);
-%         sizessquare = round(sizesquare.*[0.3 0.5 1 1.5 2]);
+        %circleedge = CreateCircles(CircleSizes);
+        
+        %temp = template_edge.circle;
+        
+        %temp = imresize(double(temp),[60 60]);
+        %temp = im2bw(temp);
         
         %falta hacerlo para cada tamaño de template
-        DupTri = conv2(D,double(template_edge.upTri),'valid');
+        %DupTri = conv2(D,double(template_edge.upTri),'same');
+        for p = 1:length(CircleSizes)
+        Dcircle{p} = conv2(D,double(circleedge{p}),'same');
+        end
+        
+        
 %         DdownTri = conv2(D,double(template_edge.downTri),'valid');
 %         Dcircle = conv2(D,double(template_edge.circle),'valid');
 %         Dsquare = conv2(D,double(template_edge.square),'valid');
@@ -33,15 +39,19 @@ function chamfer(dirname,maskFiles,template_edge)
 %         [~, X] = min(ColumnMin);
 %         location = [X, Y(X)];
         [m_height,m_width] = size(mask);
-        T = single(template_edge.upTri);
+        %T = single(template_edge.upTri);
         %M = zeros(m_height,m_width);
-        [T_height, T_width] = size(T);
+        %[T_height, T_width] = size(T);
         d = 1;
-        for i=1:m_height %Here we will see the convolution result, the position with values near to 0, will be the 
-            for j=1:m_width
-                if (DupTri<10) 
-                w_pos(d,:) = [j,i,T_width,T_height];
-                d = d + 1;
+        %f=T(4363463);
+        for i=1:m_height %Here we will see the convolution result, the position with values near to 0, will be the
+             for j=1:m_width
+                 for p=1:length(CircleSizes)
+                    if (Dcircle{p}(i,j)<20) 
+                    w_pos{k}(d,:) = [j-size(Dcircle{p},1),i-size(Dcircle{p},1),size(Dcircle{p},1),size(Dcircle{p},1)];
+                    d = d + 1;
+                    end
+                
                 end
             end
         end
@@ -64,7 +74,7 @@ function chamfer(dirname,maskFiles,template_edge)
 %         end
 %         
 %         [x,y] = find(suma==0);
-        pos = min(suma(:)); %pillar posició
+        %pos = min(suma(:)); %pillar posició
         %relacionar posicioó minima de suma amb la posició i,j de la imatge
         %original
         
