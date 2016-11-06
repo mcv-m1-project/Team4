@@ -11,6 +11,6 @@ dirname = 'train'; % Dirname of the Train files
 gt = getGroundTruth(gtTxtFiles,dirname); % Get the Ground Truth of the files 
 
 % Calculate the variables TP, FN, FP, Precision, Sensitivity, Accuracy and
-% F1 of the methods in Task 1 and Task
+% F1 of the methods in Task 1 and Task 2
 MethodCCandCorrelation = testBbox(gtTxtFiles,gt,dirnameGT); % Method of the Task 1
 MethodDT = testBbox(gtTxtFiles,gt,dirnameGT); % Method of the Task 2
