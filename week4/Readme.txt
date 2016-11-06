@@ -2,7 +2,7 @@
 
 Task 0:
 
-In this Task we ....
+In this Task, we have created the function createTemplate() to create 4 different temaples (Binary, Color, Grayscale and Edge) for each shape (Up Triangle, Down Triangle, Circle and Square). Before we have created the function getProperties() to obtain the bounding box area and the form factor for each type of signal.
 
 Task 1:
 
