@@ -1,14 +1,21 @@
 function method = testBbox(gtTxtFiles,gt,dirnameGT)
+    % testBbox
+    % Test the windowCandidates obtained from all datasets comparing with
+    % its corresponent Ground Truth
+    %
+    %    Parameter name      Value
+    %    --------------      -----
+    %    'gtTxtFiles'        All Txt Files /gt
+    %    'gt'                Ground Truth of 
+    %    'dirname'           Current directory of all dataset
 
     % Inicialization of the variables that we want to get at the final of
-    % this function (see line 34)
+    % this function (see line 47)
     TP = 0; FP = 0; FN = 0; Precision = 0; Accuracy = 0;
     Sensitivity = 0; F1 = 0; Recall = 0;
 
-    for i=1:length(gt) % for each mask
-        
-        % j = 1;                 
-            
+    for i = 1:length(gt) % for each mask
+                   
         [pathstr_r,name_r,ext_r]=fileparts(gtTxtFiles(i).name); % get the whole name of the file
         load([dirnameGT, '/', [name_r,'.mat']]); % load the corresponent windowCandidates of the file
         
@@ -26,14 +33,14 @@ function method = testBbox(gtTxtFiles,gt,dirnameGT)
     % that we've get before (TP, FN, FP) by the function PerformanceEvaluationWindow().
     [Precision, Sensitivity, Accuracy] = PerformanceEvaluationWindow(TP, FN, FP);
     Recall = TP/(TP + FN); % Calculate the recall
-    F1=(2*Precision*Recall)/(Precision+Recall); % And also F1
+    F1 = (2*Precision*Recall)/(Precision+Recall); % And also F1
 
     % if F1 is nan -> 0
-    if isnan(F1)==1
-        F1=0;
-        Recall=0;
-        Precision=0;
-        Sensitivity=0;
+    if isnan(F1) == 1
+        F1 = 0;
+        Recall = 0;
+        Precision = 0;
+        Sensitivity = 0;
     end
     
     % Save the important values of the method as a struct
