@@ -2,22 +2,62 @@ clear all
 close all
 clc
 
-dirname = '../train';
+dirname = 'train';
 txtFiles = dir(fullfile([dirname '/gt'],'*.txt')); % Get all .txt files
-[propA, propB, propC, propD, propE, propF] = getProperties(dirname, txtFiles);
+properties = getProperties(dirname, txtFiles);
 
-size = struct('upTri', max(propA(:,1)), 'downTri', max(propB(:,1)), 'circle', max([max(propC(:,1)), max(propD(:,1)), max(propE(:,1))]),'square', max(propF(:,1)));
-form_factor = struct('upTri', mean(propA(:,2)), 'downTri', mean(propB(:,2)), 'circle', mean([mean(propC(:,2)), mean(propD(:,2)), mean(propE(:,2))]),'square', mean(propF(:,2)));
-
-% UpTri
-c = createTemplate(dirname, txtFiles, size.upTri, form_factor.upTri)
+area = struct('upTri', max(properties.A(:,1)), 'downTri', max(properties.B(:,1)), 'circle', max([max(properties.C(:,1)), max(properties.D(:,1)), max(properties.E(:,1))]),'square', max(properties.F(:,1)));
+form_factor = struct('upTri', mean(properties.A(:,2)), 'downTri', mean(properties.B(:,2)), 'circle', mean([mean(properties.C(:,2)), mean(properties.D(:,2)), mean(properties.E(:,2))]),'square', mean(properties.F(:,2)));
 
 %%
-%DownTri
-createTemplate(dirname, txtFiles, size, form_factor)
 
-%Circle
-createTemplate(dirname, txtFiles, size, form_factor)
+% BW, Color, Gray
+[template_bw,template_color,template_gray,template_edge] = createTemplate(dirname, txtFiles, area, form_factor, properties);
 
-%Square
-createTemplate(dirname, txtFiles, size, form_factor)
+%%
+% Plot Up Triangle
+figure;
+subplot(2,2,1)
+imshow(double(template_bw.upTri));
+subplot(2,2,2)
+imshow(template_color.upTri)
+subplot(2,2,3)
+imshow(template_gray.upTri)
+subplot(2,2,4)
+imshow(template_edge.upTri)
+
+%%
+% Plot Down Triangle
+figure;
+subplot(2,2,1)
+imshow(double(template_bw.downTri));
+subplot(2,2,2)
+imshow(template_color.downTri)
+subplot(2,2,3)
+imshow(template_gray.downTri)
+subplot(2,2,4)
+imshow(template_edge.downTri)
+
+%%
+% Plot Circle
+figure;
+subplot(2,2,1)
+imshow(double(template_bw.circle));
+subplot(2,2,2)
+imshow(template_color.circle)
+subplot(2,2,3)
+imshow(template_gray.circle)
+subplot(2,2,4)
+imshow(template_edge.circle)
+
+%%
+% Plot Square
+figure;
+subplot(2,2,1)
+imshow(double(template_bw.square));
+subplot(2,2,2)
+imshow(template_color.square)
+subplot(2,2,3)
+imshow(template_gray.square)
+subplot(2,2,4)
+imshow(template_edge.square)
