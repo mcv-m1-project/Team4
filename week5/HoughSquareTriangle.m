@@ -24,7 +24,7 @@ if maxval<3*medval
     %disp('Found triangle');
     SquareTriangle = 1;
 end
-valor=windowCandidate.w;
+valor=windowCandidate.w - 80;
 if  (p(3) > valor)
     %disp('Found square');
     SquareTriangle = 1;
