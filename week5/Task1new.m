@@ -3,12 +3,12 @@
     
     
     [final, maskFiles] = ReadMat();
-    dirname='Masks&Mat/Validation Train';
+    dirname='Masks&Mat/Method CC and correlation';
     matFiles = dir(fullfile(dirname,'*.mat')); % Get all .mat files
-    mkdir('Hough');
-    dirnamemask='Hough';
+    mkdir('Hough Test');
+    dirnamemask='Hough Test';
     
-    dirnameimg='Validation train img';
+    dirnameimg='Test Images';
     ImageFiles= ReadImage();
     %Final values for maximum angle deviation of quare and triangle signal
     %lines
@@ -69,10 +69,14 @@
                      if(circle_detected == false)
                      
                      if window.y ~= 0 && window.x~= 0
-                         if (size(im,2) - window.x-window.w)<5
+                         if (size(im,2) - window.x-window.w)<5 && (size(im,2) - window.x-window.w)>1
                         mask_windowed = im(window.y-1:window.y+window.h+1, window.x-1:window.x+window.w+1, :); 
-                         elseif (size(im,2) - window.x-window.w)>19
+                         elseif (size(im,2) - window.x-window.w)>19 && window.x> 20 && window.y >20
                         mask_windowed = im(window.y-20:window.y+window.h+20, window.x-20:window.x+window.w+20, :);
+                         elseif (size(im,2) - window.x-window.w)>19 && (window.x< 20 || window.y <20)
+                          mask_windowed = im(window.y:window.y+window.h, window.x:window.x+window.w, :);   
+                         elseif (size(im,2) - window.x-window.w)<1
+                          mask_windowed = im(window.y:window.y+window.h, window.x:window.x+window.w, :);   
                          else
                         mask_windowed = im(window.y-5:window.y+window.h+5, window.x-5:window.x+window.w+5, :);
                          end
@@ -264,4 +268,5 @@
        clear windowCandidatesReal;
         
     end
+    
     
