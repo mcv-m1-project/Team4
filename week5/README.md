@@ -7,7 +7,8 @@ To avoid false windowCandidates we have filtered them using Template Matching fr
 </br>
 **Task 2:**</br>
 Use Task2_Hough.m</br>
-Geometric Heruistics. Circle search using rgb2gray().</br>
+You need to have the masks & .mat from previous weeks and also the .jpg (images) so the formula CirculaHough_GRD works. Here we compute Hough for circles, squares and triangles and we decide if the windows Candidates from previous weeks are really circles, squares or triangles or not.
+
 </br>
 **Task 3:**</br>
 Use Task3.m</br>
