@@ -1,5 +1,7 @@
 %% ====================== Task 1 (Week 5) ====================== %%
-% UCM
+
+% Ultrametric Contour Map (UCM)
+
 clear all 
 close all
 clc
@@ -9,18 +11,18 @@ addpath('MCG-PreTrained')
 % root_dir = '';
 % install
 
-% READ
+% READ DIR
 dirname = 'Validation';
 dirnameUCM = 'UCM_TestSegImages';
 
-% WRITE
+% WRITE DIR
 dirWriteMask = 'WriteMask';
 dirWriteMat = 'TestMatNew';
 
 imgFiles = dir(fullfile(dirname,'*.jpg')); % Get all the images
 ucmFiles = dir(fullfile(dirnameUCM,'*.mat')); % Get all the images
 
-% Laod Template
+% Laod Template BW (Square, Circle, Triangles)
 load('template_bw.mat');
 
 if ~exist(dirWriteMask, 'dir')
@@ -47,22 +49,23 @@ template_bw.square = imopen(template_bw.square,se2);
 
 for f = 1:length(imgFiles)    
     [pathstr_i, name_i, ext_i]=fileparts(ucmFiles(f).name);
-    seg = load([dirnameUCM, '/' name_i, '.mat']);
-    seg = seg.seg; % From load UCMSegImages
+    seg = load([dirnameUCM, '/' name_i, '.mat']); % Load seg Logical Matrix from 'segment_ucm' function
+    seg = seg.seg; % seg Struct contains the seg logical matrix (seg->seg)  
     % seg = segment_ucm(ima, 0.8);
-    u = unique(seg);
+    u = unique(seg); % Get differents regions from seg
     d = 1; dd = 1;
     Mask = false([size(seg,1) size(seg,2)]);
+    
     for i = 1:length(u) 
         BW=(seg==i);
-        % BW=seg(:,:,1);
         stats = regionprops(BW,'BoundingBox','Extent','Orientation','ConvexArea'); %,'Solidity');
         boundingboxes = cat(1,stats.BoundingBox);
         fr = cat(1,stats.Extent);
-        perc = ( (stats.ConvexArea) ./ (size(BW,1)*size(BW,2)) ) * 100;
+        perc = ( (stats.ConvexArea) / (size(BW,1)*size(BW,2)) ) * 100;
         orientation = stats.Orientation;
         % solidity = stats.Solidity
-        if ((perc > 0.05) && (perc < 2) ) % && (orientation > -17) && (orientation < 17))
+	
+        if (perc > 0.05) && (perc < 2) % && (orientation > -17) && (orientation < 17))
             for k = 1:size(boundingboxes,1)
                 ratio(k) = boundingboxes(k,3) ./ boundingboxes(k,4);
                 if ((fr(k) > 0.4 && fr(k) <= 1.1)) && ((boundingboxes(k,3) > 40) || (boundingboxes(k,4) > 40)) && ((ratio(k) > 0.65) && (ratio(k) < 1.3))        
@@ -78,6 +81,7 @@ for f = 1:length(imgFiles)
                     if x1~=0 && y1~=0 && w~=0 && h~=0
                         I = imcrop(BW,[x1 y1 w h]);
                         
+			% Improve the BW detected
                         I2 = imdilate(I,se1);
                         I3 = imfill(I2,'holes');
                         I = imopen(I3,se2);
@@ -133,14 +137,6 @@ for f = 1:length(imgFiles)
         CCBoxes = struct('x', x1, 'y' , y1, 'w', w, 'h', h);
         Mask = Mask | logical(BW);
     end
-%     z = 1;
-%     
-%     if(isempty(w_pos))
-%         w_pos(z,:) = struct( 'x', 0, ... 
-%                'y', 0, ... 
-%                'w', 0, ... 
-%                'h', 0);
-%     end
 
     % CCBoxes(:,1) = struct('x', w_pos(:,1), 'y' , w_pos(:,2), 'w', w_pos(:,3), 'h', w_pos(:,4));     
     
