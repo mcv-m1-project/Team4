@@ -3,7 +3,7 @@
 **Task 1:**</br>
 Use Task1.m</br>
 We have used the UCM Method to generate different segmentation regions for each image. Then we get the windowsCandidates depends on the generated regions.</br>
-To avoid false windowCandidates we have filtered them using Template Matching from Week 3 to save only the good windows as a .mat file.
+To avoid false windowCandidates we have filtered them using Template Matching from Week 3 to save only the good windows as a .mat file</br>
 </br>
 **Task 2:**</br>
 Use Task2_Hough.m</br>
